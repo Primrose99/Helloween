@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HELLOWEEN RADIO — 24/7 Halloween Broadcasting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Cinzel:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #060608;
+      --surface:   #0d0d12;
+      --border:    #1e1a2a;
+      --orange:    #ff6a00;
+      --orange2:   #ff9a3c;
+      --purple:    #7b2fff;
+      --purple2:   #b36bff;
+      --green:     #39ff14;
+      --text:      #e8e0d0;
+      --muted:     #6b6070;
+      --font-spook: 'Creepster', cursive;
+      --font-serif: 'Cinzel', serif;
+      --font-mono:  'Share Tech Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(123,47,255,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(255,106,0,0.10) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .particle {
+      position: absolute;
+      opacity: 0;
+      animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100vh) rotate(360deg); }
+    }
+
+    .wrapper { position: relative; z-index: 2; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* HEADER */
+    header { text-align: center; padding: 3rem 0 2rem; position: relative; }
+
+    .bat-left, .bat-right {
+      position: absolute; top: 3.2rem; font-size: 2rem;
+      animation: bat-flap 1.6s ease-in-out infinite;
+    }
+    .bat-left  { left: 4%; }
+    .bat-right { right: 4%; animation-delay: 0.8s; }
+    @keyframes bat-flap {
+      0%,100% { transform: translateY(0) scaleY(1); }
+      50%     { transform: translateY(-10px) scaleY(0.65); }
+    }
+
+    .station-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 0.4rem;
+      animation: flicker 5s infinite;
+    }
+    @keyframes flicker {
+      0%,18%,20%,22%,54%,56%,100% { opacity:1; }
+      19%,21%,55% { opacity:0.25; }
+    }
+
+    .station-name {
+      font-family: var(--font-spook);
+      font-size: clamp(4rem, 13vw, 8.5rem);
+      color: var(--orange);
+      line-height: 1;
+      text-shadow:
+        0 0 18px rgba(255,106,0,0.9),
+        0 0 50px rgba(255,106,0,0.4),
+        4px 4px 0 rgba(123,47,255,0.7);
+      letter-spacing: 0.04em;
+    }
+
+    .station-tagline {
+      font-family: var(--font-serif);
+      font-size: 0.82rem; letter-spacing: 0.22em;
+      color: var(--purple2); margin-top: 0.5rem; text-transform: uppercase;
+    }
+
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,106,0,0.1); border: 1px solid var(--orange);
+      border-radius: 2px; padding: 0.3rem 1rem;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--orange); margin-top: 1.2rem;
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--orange);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+    /* PLAYER CARD */
+    .player-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2.5rem 2rem; margin: 2.5rem 0;
+      position: relative; overflow: hidden;
+    }
+    .player-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, var(--purple), var(--orange), var(--purple2), var(--orange));
+      background-size: 300% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { 0%{background-position:0% 0%} 100%{background-position:300% 0%} }
+
+    /* Visualizer */
+    .visualizer {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 3px; height: 56px; margin-bottom: 2rem;
+    }
+    .bar {
+      width: 5px; border-radius: 2px 2px 0 0;
+      background: linear-gradient(to top, var(--orange), var(--purple2));
+      animation: eq-anim linear infinite;
+      transform-origin: bottom;
+    }
+    @keyframes eq-anim { 0%,100%{transform:scaleY(0.08);} 50%{transform:scaleY(1);} }
+    .bar.paused { animation-play-state: paused; transform: scaleY(0.08); }
+
+    .now-playing-wrap {
+      display: flex; gap: 2rem; align-items: center;
+      margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .station-art {
+      width: 96px; height: 96px; border-radius: 4px;
+      background: linear-gradient(135deg, #180828, #280808);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; flex-shrink: 0;
+    }
+    .spinning { animation: spin 8s linear infinite; }
+    .spinning.paused { animation-play-state: paused; }
+    @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+    .track-info { flex: 1; min-width: 160px; }
+    .track-label {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.3rem;
+    }
+    .track-title {
+      font-family: var(--font-serif); font-size: 1.25rem;
+      color: var(--orange2); line-height: 1.2; margin-bottom: 0.3rem;
+    }
+    .track-artist { font-size: 0.82rem; color: var(--purple2); }
+
+    .controls { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .play-btn {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--orange); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+      transition: all 0.2s;
+      box-shadow: 0 0 18px rgba(255,106,0,0.45);
+    }
+    .play-btn:hover { background: var(--orange2); transform: scale(1.08); }
+    .play-btn:active { transform: scale(0.95); }
+
+    .volume-wrap { display:flex; align-items:center; gap:0.6rem; flex:1; min-width:100px; }
+    .vol-icon { font-size:0.9rem; color:var(--muted); }
+    input[type=range] {
+      -webkit-appearance: none; flex:1; height:3px;
+      background: var(--border); border-radius:2px; outline:none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+      background:var(--orange); cursor:pointer;
+      box-shadow:0 0 8px rgba(255,106,0,0.6);
+    }
+    .stream-status { font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); margin-left:auto; }
+    .stream-status span { color: var(--green); }
+
+    #radio-audio { display:none; }
+
+    /* SONG HISTORY */
+    .section-header { display:flex; align-items:baseline; gap:1rem; margin-bottom:1.2rem; }
+    .section-title {
+      font-family: var(--font-spook); font-size: 2rem;
+      color: var(--purple2);
+      text-shadow: 0 0 18px rgba(123,47,255,0.55);
+      letter-spacing: 0.05em;
+    }
+    .section-line { flex:1; height:1px; background: linear-gradient(90deg, var(--border), transparent); }
+
+    .history-list { display:flex; flex-direction:column; gap:2px; }
+    .history-item {
+      display:flex; align-items:center; gap:1rem;
+      padding:0.85rem 1.2rem;
+      background:var(--surface); border:1px solid transparent;
+      border-radius:2px; transition:all 0.2s; position:relative; overflow:hidden;
+    }
+    .history-item:hover { border-color:var(--border); background:#111118; }
+    .history-item.current { border-color:rgba(255,106,0,0.4); background:rgba(255,106,0,0.05); }
+    .history-item.current::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--orange);
+    }
+    .h-num { font-size:0.68rem; color:var(--muted); width:18px; text-align:right; flex-shrink:0; }
+    .history-item.current .h-num { color:var(--orange); }
+    .h-emoji { font-size:1.1rem; flex-shrink:0; }
+    .h-info { flex:1; min-width:0; }
+    .h-track {
+      font-family:var(--font-serif); font-size:0.88rem; color:var(--text);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .h-artist { font-size:0.72rem; color:var(--muted); margin-top:0.1rem; }
+    .h-time { font-size:0.66rem; color:var(--muted); flex-shrink:0; }
+    .history-item.current .h-time { color:var(--orange); }
+
+    /* DIVIDER */
+    .divider { text-align:center; font-size:1.4rem; margin:2rem 0; letter-spacing:0.8rem; opacity:0.35; }
+
+    /* FOOTER */
+    footer {
+      text-align:center; padding:2.5rem 0 1rem; margin-top:3rem;
+      border-top:1px solid var(--border);
+      font-size:0.68rem; color:var(--muted); letter-spacing:0.12em;
+      line-height:2;
+    }
+    footer a { color:var(--orange); text-decoration:none; }
+    footer a:hover { color:var(--orange2); }
+
+    @media (max-width:580px) {
+      .bat-left,.bat-right { font-size:1.3rem; }
+      .now-playing-wrap { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<audio id="radio-audio" preload="none">
+  <!-- 🔧 REPLACE THIS URL with your actual stream (Shoutcast/Icecast/Radio.co/Zeno.fm etc.) -->
+  <source src="YOUR_STREAM_URL_HERE" type="audio/mpeg"/>
+</audio>
+
+<div class="wrapper">
+
+  <header>
+    <div class="bat-left">🦇</div>
+    <div class="bat-right">🦇</div>
+    <div class="station-eyebrow">📻 Broadcasting Live 24/7</div>
+    <h1 class="station-name">HELLOWEEN</h1>
+    <p class="station-tagline">Radio · Where Every Night Is Halloween</p>
+    <div class="live-badge"><span class="live-dot"></span> On Air</div>
+  </header>
+
+  <div class="player-card">
+    <div class="visualizer" id="visualizer"></div>
+    <div class="now-playing-wrap">
+      <div class="station-art"><span id="art-icon" class="spinning">🎃</span></div>
+      <div class="track-info">
+        <div class="track-label">Now Playing</div>
+        <div class="track-title" id="track-title">Thriller</div>
+        <div class="track-artist" id="track-artist">Michael Jackson</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+      <div class="volume-wrap">
+        <span class="vol-icon">🔈</span>
+        <input type="range" id="volume" min="0" max="1" step="0.02" value="0.8" oninput="setVol(this.value)"/>
+        <span class="vol-icon">🔊</span>
+      </div>
+      <div class="stream-status">STREAM <span id="stream-label">READY</span></div>
+    </div>
+  </div>
+
+  <div class="divider">🎃 🕷️ 🦇 🕷️ 🎃</div>
+
+  <div class="section-header">
+    <h2 class="section-title">Crypt of Sounds</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="history-list" id="history-list"></div>
+
+  <footer>
+    <div>HELLOWEEN RADIO &nbsp;·&nbsp; 24/7 Halloween Broadcasting</div>
+    <div>
+      Built by <a href="https://github.com/primrose99" target="_blank">primrose99</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/primrose99/Helloween" target="_blank">View on GitHub ↗</a>
+      &nbsp;·&nbsp; Powered by Claude AI
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ── SONG DATA ──────────────────────────────────────────────────
+  // Replace / extend this array with real data from your stream's metadata API
+  const songs = [
+    { title:"Thriller",              artist:"Michael Jackson",    time:"NOW",   emoji:"🧟" },
+    { title:"Monster Mash",          artist:"Bobby Pickett",      time:"10:42", emoji:"🧛" },
+    { title:"This Is Halloween",     artist:"Marilyn Manson",     time:"10:38", emoji:"🎃" },
+    { title:"People Are Strange",    artist:"The Doors",          time:"10:33", emoji:"🚪" },
+    { title:"Ghostbusters",          artist:"Ray Parker Jr.",     time:"10:29", emoji:"👻" },
+    { title:"Highway to Hell",       artist:"AC/DC",              time:"10:24", emoji:"🔥" },
+    { title:"Bat Out of Hell",       artist:"Meat Loaf",          time:"10:19", emoji:"🦇" },
+    { title:"Werewolves of London",  artist:"Warren Zevon",       time:"10:15", emoji:"🐺" },
+    { title:"Paint It Black",        artist:"The Rolling Stones", time:"10:11", emoji:"🖤" },
+    { title:"Time Warp",             artist:"Rocky Horror Cast",  time:"10:06", emoji:"⏳" },
+  ];
+
+  function renderHistory() {
+    document.getElementById('history-list').innerHTML = songs.map((s,i) => `
+      <div class="history-item ${i===0?'current':''}">
+        <span class="h-num">${i===0?'▶':i}</span>
+        <span class="h-emoji">${s.emoji}</span>
+        <div class="h-info">
+          <div class="h-track">${s.title}</div>
+          <div class="h-artist">${s.artist}</div>
+        </div>
+        <span class="h-time">${s.time}</span>
+      </div>`).join('');
+  }
+  renderHistory();
+
+  // ── VISUALIZER ────────────────────────────────────────────────
+  const viz = document.getElementById('visualizer');
+  for (let i = 0; i < 44; i++) {
+    const b = document.createElement('div');
+    b.className = 'bar paused';
+    b.style.cssText = `height:${18+Math.random()*38}px;animation-duration:${(.35+Math.random()*.75).toFixed(2)}s;animation-delay:${(Math.random()*1.4).toFixed(2)}s;`;
+    viz.appendChild(b);
+  }
+
+  // ── PLAYER ────────────────────────────────────────────────────
+  const audio  = document.getElementById('radio-audio');
+  const btn    = document.getElementById('play-btn');
+  const art    = document.getElementById('art-icon');
+  const label  = document.getElementById('stream-label');
+  let playing  = false;
+  audio.volume = 0.8;
+
+  function togglePlay() {
+    if (playing) {
+      audio.pause();
+      setState(false);
+    } else {
+      label.textContent = 'LOADING…';
+      label.style.color = 'var(--orange2)';
+      audio.play()
+        .then(() => setState(true))
+        .catch(() => { setState(true); label.textContent = 'DEMO'; });
+    }
+  }
+
+  function setState(on) {
+    playing = on;
+    btn.textContent = on ? '⏸' : '▶';
+    document.querySelectorAll('.bar').forEach(b => b.classList.toggle('paused', !on));
+    art.classList.toggle('paused', !on);
+    label.textContent  = on ? 'LIVE'  : 'PAUSED';
+    label.style.color  = on ? 'var(--green)' : 'var(--muted)';
+  }
+
+  function setVol(v) { audio.volume = parseFloat(v); }
+
+  // ── FLOATING PARTICLES ────────────────────────────────────────
+  const icons = ['🎃','🦇','👻','🕷️','🕸️','💀','🖤','🌑','⚰️','🧛'];
+  const pc    = document.getElementById('particles');
+  function spawn() {
+    const p = document.createElement('div');
+    p.className   = 'particle';
+    p.textContent = icons[Math.floor(Math.random()*icons.length)];
+    p.style.left  = Math.random()*100 + 'vw';
+    p.style.bottom = '-30px';
+    p.style.fontSize = (.7+Math.random()*1.1)+'rem';
+    const dur = 9+Math.random()*10;
+    p.style.animationDuration = dur+'s';
+    pc.appendChild(p);
+    setTimeout(()=>p.remove(), dur*1000);
+  }
+  for (let i=0;i<10;i++) setTimeout(spawn, Math.random()*5000);
+  setInterval(spawn, 2800);
+
+  // ── SIMULATE NOW PLAYING ROTATION ────────────────────────────
+  // In production: replace with fetch() to your stream metadata endpoint
+  setInterval(()=>{
+    const s = songs.splice(1,1)[0] || songs[0];
+    const prev = songs[0];
+    prev.time = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    s.time = 'NOW';
+    songs.unshift(s);
+    document.getElementById('track-title').textContent  = s.title;
+    document.getElementById('track-artist').textContent = s.artist;
+    art.textContent = s.emoji;
+    renderHistory();
+  }, 210000); // every 3.5 min
+</script>
+</body>
+</html>
