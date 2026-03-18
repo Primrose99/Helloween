@@ -4,425 +4,775 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HELLOWEEN RADIO — 24/7 Halloween Broadcasting</title>
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Cinzel:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=MedievalSharp&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:        #060608;
-      --surface:   #0d0d12;
-      --border:    #1e1a2a;
-      --orange:    #ff6a00;
-      --orange2:   #ff9a3c;
-      --purple:    #7b2fff;
-      --purple2:   #b36bff;
-      --green:     #39ff14;
-      --text:      #e8e0d0;
-      --muted:     #6b6070;
-      --font-spook: 'Creepster', cursive;
-      --font-serif: 'Cinzel', serif;
-      --font-mono:  'Share Tech Mono', monospace;
+      --bg:        #0b0807;
+      --amber:     #c8780a;
+      --amber2:    #e8a030;
+      --amber3:    #f5c868;
+      --red2:      #b02020;
+      --cream:     #ede5d4;
+      --sepia:     #9a8870;
+      --border:    #2a1f0e;
+
+      /* Tombstone palette */
+      --stone:        #c8c4bc;   /* main stone face */
+      --stone-dark:   #a09890;   /* shadow / edge */
+      --stone-light:  #dedad4;   /* highlight face */
+      --stone-moss:   #7a8a6a;   /* moss tint */
+      --stone-crack:  #8a8480;   /* crack lines */
+      --stone-txt:    #2e2a26;   /* engraved text — very dark on light stone */
+      --stone-txt2:   #4a4440;   /* secondary engraved text */
+      --stone-sub:    #5a5652;   /* muted engraved text */
+
+      --font-title:   'UnifrakturMaguntia', cursive;
+      --font-stone:   'Cinzel Decorative', serif;   /* tombstone engravings */
+      --font-stone2:  'Cinzel', serif;              /* smaller stone text */
+      --font-mono:    'Share Tech Mono', monospace;
     }
 
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
 
     body {
       background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-mono);
+      color: var(--cream);
+      font-family: var(--font-stone2);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    body::before {
+    /* ── SCENE ── */
+    .scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+    .scene-sky {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 55% at 65% 0%,
+        #1c1228 0%, #0b0807 55%, #130904 100%);
+    }
+    .moon {
+      position: absolute; top: 7%; right: 20%;
+      width: 76px; height: 76px; border-radius: 50%;
+      background: radial-gradient(circle at 38% 38%, #f5e8b0, #d4b860 60%, #a07820);
+      box-shadow: 0 0 38px rgba(212,184,96,.4), 0 0 90px rgba(212,184,96,.15);
+      animation: moon-glow 7s ease-in-out infinite;
+    }
+    @keyframes moon-glow {
+      0%,100%{box-shadow:0 0 38px rgba(212,184,96,.4),0 0 90px rgba(212,184,96,.15);}
+      50%    {box-shadow:0 0 55px rgba(212,184,96,.55),0 0 120px rgba(212,184,96,.25);}
+    }
+    .stars {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 8%  12%, rgba(255,240,200,.8) 0%,transparent 100%),
+        radial-gradient(1px 1px at 22% 7%,  rgba(255,240,200,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 38% 18%, rgba(255,240,200,.7) 0%,transparent 100%),
+        radial-gradient(1px 1px at 52% 5%,  rgba(255,240,200,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 63% 16%, rgba(255,240,200,.8) 0%,transparent 100%),
+        radial-gradient(1px 1px at 76% 9%,  rgba(255,240,200,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 87% 22%, rgba(255,240,200,.7) 0%,transparent 100%),
+        radial-gradient(1px 1px at 14% 38%, rgba(255,240,200,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 70% 32%, rgba(255,240,200,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 45% 28%, rgba(255,240,200,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 93% 14%, rgba(255,240,200,.6) 0%,transparent 100%);
+    }
+    .cloud {
+      position: absolute; font-size: 3.5rem;
+      opacity: .14; animation: drift linear infinite; filter: blur(2px);
+    }
+    .cloud:nth-child(1){animation-duration:42s;animation-delay:0s;   top:2%;}
+    .cloud:nth-child(2){animation-duration:58s;animation-delay:-22s; top:6%;font-size:2.4rem;}
+    .cloud:nth-child(3){animation-duration:72s;animation-delay:-38s; top:1%;font-size:4rem;}
+    @keyframes drift{from{transform:translateX(-15vw);}to{transform:translateX(115vw);}}
+
+    .fog {
+      position: absolute; bottom:0; left:0; right:0; height:28%;
+      background: linear-gradient(to top,
+        rgba(11,8,7,.96) 0%, rgba(20,12,6,.55) 45%, transparent 100%);
+    }
+    .win-flicker {animation:wf 3.2s ease-in-out infinite;}
+    .win-flicker2{animation:wf 4.8s ease-in-out infinite 1.1s;}
+    .win-flicker3{animation:wf 2.6s ease-in-out infinite .4s;}
+    @keyframes wf{0%,100%{opacity:.9;}20%{opacity:.25;}22%{opacity:.85;}75%{opacity:.35;}77%{opacity:.9;}}
+
+    .haunted-house{position:absolute;bottom:0;left:0;width:320px;opacity:.9;pointer-events:none;}
+    .dead-trees{position:absolute;bottom:0;right:0;width:240px;opacity:.72;pointer-events:none;}
+    .ground-sil{
+      position:absolute;bottom:0;left:0;right:0;height:72px;
+      background:var(--bg);
+      clip-path:polygon(0% 100%,0% 62%,3% 60%,5% 46%,7% 60%,12% 56%,14% 37%,16% 56%,22% 53%,24% 41%,26% 41%,27% 53%,35% 51%,40% 62%,45% 53%,52% 56%,54% 43%,56% 56%,62% 51%,65% 46%,68% 51%,75% 56%,80% 62%,85% 56%,87% 46%,89% 56%,95% 59%,100% 56%,100% 100%);
+    }
+
+    /* ── PAGE ── */
+    .page {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 2rem 1rem 8rem;
+    }
+
+    /* ── STATION HEADER ── */
+    .station-header{text-align:center;margin-bottom:2.5rem;position:relative;}
+    .bat-l,.bat-r{
+      position:absolute;top:3.2rem;font-size:1.9rem;
+      animation:bat 1.7s ease-in-out infinite;
+    }
+    .bat-l{left:2%;} .bat-r{right:2%;animation-delay:.85s;}
+    @keyframes bat{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(-9px) scaleY(.65);}}
+    .eyebrow{
+      font-family:var(--font-mono);font-size:.65rem;
+      letter-spacing:.35em;text-transform:uppercase;
+      color:var(--amber);margin-bottom:.3rem;
+      animation:flicker-t 8s infinite;
+    }
+    @keyframes flicker-t{0%,94%,100%{opacity:1;}95%{opacity:.2;}96%{opacity:1;}97%{opacity:.3;}}
+    .station-title{
+      font-family:var(--font-title);
+      font-size:clamp(3.4rem,9.5vw,6.5rem);
+      color:var(--amber2);line-height:1;
+      text-shadow:0 0 14px rgba(200,120,10,.85),0 0 38px rgba(200,120,10,.3),2px 3px 0 rgba(139,26,26,.8);
+    }
+    .station-sub{
+      font-family:var(--font-stone2);font-size:.76rem;
+      letter-spacing:.26em;color:var(--sepia);
+      text-transform:uppercase;margin-top:.4rem;
+    }
+    .on-air{
+      display:inline-flex;align-items:center;gap:.5rem;
+      border:1px solid var(--amber);padding:.24rem .9rem;
+      font-family:var(--font-mono);font-size:.62rem;
+      letter-spacing:.2em;color:var(--amber);margin-top:.8rem;
+      background:rgba(200,120,10,.07);
+    }
+    .on-air-dot{width:6px;height:6px;border-radius:50%;background:var(--red2);animation:pdot 1.2s ease-in-out infinite;}
+    @keyframes pdot{0%,100%{opacity:1;}50%{opacity:.15;}}
+
+
+    /* ══════════════════════════════════════════════════════
+       TOMBSTONE WIDGET
+       The entire widget IS the tombstone.
+       Shape: arch top, rectangular body, slight perspective bevel.
+       ══════════════════════════════════════════════════════ */
+
+    /* Outer wrapper — provides the shadow + ground depth */
+    .tombstone-wrap {
+      position: relative;
+      width: min(300px, 88vw);
+      /* Drop-shadow to suggest it's standing in earth */
+      filter:
+        drop-shadow(0 8px 0px #070504)
+        drop-shadow(0 16px 0px rgba(0,0,0,.5))
+        drop-shadow(0 0 30px rgba(0,0,0,.7));
+    }
+
+    /* The stone itself — uses clip-path for the arched top */
+    .tombstone {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(160deg,
+        var(--stone-light) 0%,
+        var(--stone)       40%,
+        var(--stone-dark)  100%);
+      /* Arch top via border-radius — big radius on top corners */
+      border-radius: 48% 48% 4% 4% / 22% 22% 2% 2%;
+      padding: 0 0 1.4rem;
+      overflow: hidden;
+
+      /* Engraved stone texture — subtle noise */
+      background-image:
+        linear-gradient(160deg, var(--stone-light) 0%, var(--stone) 40%, var(--stone-dark) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-blend-mode: normal, multiply;
+
+      /* Left-edge bevel: light left, dark right — looks 3D */
+      box-shadow:
+        inset 3px 0 8px rgba(255,255,255,.35),
+        inset -3px 0 8px rgba(0,0,0,.25),
+        inset 0 3px 10px rgba(255,255,255,.3),
+        inset 0 -4px 10px rgba(0,0,0,.2);
+    }
+
+    /* Crack lines — purely decorative SVG overlay */
+    .tombstone::after {
       content: '';
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(123,47,255,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(255,106,0,0.10) 0%, transparent 60%);
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='420'%3E%3Cpath d='M80 60 Q85 90 78 130 Q75 155 82 180' stroke='%238a8480' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M200 100 Q195 125 202 160' stroke='%238a8480' stroke-width='0.5' fill='none' opacity='0.3'/%3E%3Cpath d='M140 280 Q145 295 138 320' stroke='%238a8480' stroke-width='0.5' fill='none' opacity='0.35'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
     }
 
-    body::after {
+    /* Moss patches at bottom */
+    .tombstone::before {
       content: '';
-      position: fixed; inset: 0;
-      background: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
-      );
+      position: absolute; bottom: 0; left: 0; right: 0; height: 28px;
+      background: linear-gradient(to top,
+        rgba(80,100,60,.22) 0%,
+        rgba(80,100,60,.08) 60%,
+        transparent 100%);
       pointer-events: none;
-      z-index: 1000;
     }
 
-    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
-    .particle {
-      position: absolute;
-      opacity: 0;
-      animation: float-up linear infinite;
-    }
-    @keyframes float-up {
-      0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.3; }
-      100% { opacity: 0; transform: translateY(-100vh) rotate(360deg); }
-    }
-
-    .wrapper { position: relative; z-index: 2; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-    /* HEADER */
-    header { text-align: center; padding: 3rem 0 2rem; position: relative; }
-
-    .bat-left, .bat-right {
-      position: absolute; top: 3.2rem; font-size: 2rem;
-      animation: bat-flap 1.6s ease-in-out infinite;
-    }
-    .bat-left  { left: 4%; }
-    .bat-right { right: 4%; animation-delay: 0.8s; }
-    @keyframes bat-flap {
-      0%,100% { transform: translateY(0) scaleY(1); }
-      50%     { transform: translateY(-10px) scaleY(0.65); }
+    /* ── ARCH ORNAMENT — decorative cross at top ── */
+    .stone-ornament {
+      display: flex; justify-content: center; align-items: center;
+      padding-top: 1.4rem;
+      padding-bottom: .5rem;
+      font-size: 1.1rem;
+      color: var(--stone-crack);
+      opacity: .65;
+      letter-spacing: .3rem;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.4);
     }
 
-    .station-eyebrow {
-      font-size: 0.68rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: var(--orange); margin-bottom: 0.4rem;
-      animation: flicker 5s infinite;
+    /* ── DIVIDING LINE — engraved rule ── */
+    .stone-rule {
+      margin: 0 1.4rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--stone-crack), var(--stone-crack), transparent);
+      opacity: .5;
     }
-    @keyframes flicker {
-      0%,18%,20%,22%,54%,56%,100% { opacity:1; }
-      19%,21%,55% { opacity:0.25; }
+    .stone-rule-double {
+      margin: 0 1.4rem .1rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--stone-crack), var(--stone-crack), transparent);
+      opacity: .3;
     }
 
-    .station-name {
-      font-family: var(--font-spook);
-      font-size: clamp(4rem, 13vw, 8.5rem);
-      color: var(--orange);
-      line-height: 1;
+    /* ── HERE LIES label ── */
+    .here-lies {
+      font-family: var(--font-stone);
+      font-size: .62rem;
+      font-weight: 400;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--stone-sub);
+      text-align: center;
+      padding: .7rem 1rem .2rem;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.5), -1px -1px 0 rgba(0,0,0,.15);
+    }
+
+    /* ── SONG TITLE — the "name on the stone" ── */
+    .stone-song {
+      font-family: var(--font-stone);
+      font-size: clamp(1rem, 4.5vw, 1.3rem);
+      font-weight: 700;
+      color: var(--stone-txt);
+      text-align: center;
+      padding: .15rem 1rem .1rem;
+      line-height: 1.2;
+      /* Engraved look: dark text with inner light edge */
       text-shadow:
-        0 0 18px rgba(255,106,0,0.9),
-        0 0 50px rgba(255,106,0,0.4),
-        4px 4px 0 rgba(123,47,255,0.7);
-      letter-spacing: 0.04em;
+        1px 1px 0 rgba(255,255,255,.55),
+        -1px -1px 0 rgba(0,0,0,.35),
+        0 2px 4px rgba(0,0,0,.2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    .station-tagline {
-      font-family: var(--font-serif);
-      font-size: 0.82rem; letter-spacing: 0.22em;
-      color: var(--purple2); margin-top: 0.5rem; text-transform: uppercase;
+    /* ── ARTIST ── */
+    .stone-artist {
+      font-family: var(--font-stone2);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--stone-txt2);
+      text-align: center;
+      padding: .1rem 1rem .05rem;
+      letter-spacing: .06em;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.45), -1px -1px 0 rgba(0,0,0,.2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    .live-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(255,106,0,0.1); border: 1px solid var(--orange);
-      border-radius: 2px; padding: 0.3rem 1rem;
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--orange); margin-top: 1.2rem;
+    /* ── ALBUM ── */
+    .stone-album {
+      font-family: var(--font-stone2);
+      font-size: .64rem;
+      color: var(--stone-sub);
+      text-align: center;
+      padding: .05rem 1rem .6rem;
+      font-style: italic;
+      letter-spacing: .04em;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.35);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .live-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--orange);
-      animation: blink 1.2s ease-in-out infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
 
-    /* PLAYER CARD */
-    .player-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 4px; padding: 2.5rem 2rem; margin: 2.5rem 0;
-      position: relative; overflow: hidden;
-    }
-    .player-card::before {
-      content: ''; position: absolute; top:0; left:0; right:0; height:2px;
-      background: linear-gradient(90deg, var(--purple), var(--orange), var(--purple2), var(--orange));
-      background-size: 300% 100%;
-      animation: shimmer 3s linear infinite;
-    }
-    @keyframes shimmer { 0%{background-position:0% 0%} 100%{background-position:300% 0%} }
-
-    /* Visualizer */
-    .visualizer {
+    /* ── MINI VISUALIZER — thin amber bars ── */
+    .stone-viz {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 3px; height: 56px; margin-bottom: 2rem;
+      gap: 2px; height: 18px;
+      margin: .2rem 1rem .5rem;
+      opacity: .6;
     }
-    .bar {
-      width: 5px; border-radius: 2px 2px 0 0;
-      background: linear-gradient(to top, var(--orange), var(--purple2));
-      animation: eq-anim linear infinite;
-      transform-origin: bottom;
+    .sv-bar {
+      width: 3px; border-radius: 1px 1px 0 0;
+      background: var(--stone-crack);
+      animation: sv-eq linear infinite; transform-origin: bottom;
     }
-    @keyframes eq-anim { 0%,100%{transform:scaleY(0.08);} 50%{transform:scaleY(1);} }
-    .bar.paused { animation-play-state: paused; transform: scaleY(0.08); }
+    @keyframes sv-eq{0%,100%{transform:scaleY(.08);}50%{transform:scaleY(1);}}
+    .sv-bar.paused{animation-play-state:paused;transform:scaleY(.08);}
 
-    .now-playing-wrap {
-      display: flex; gap: 2rem; align-items: center;
-      margin-bottom: 2rem; flex-wrap: wrap;
+    /* ── PREVIOUSLY section ── */
+    .stone-prev-head {
+      font-family: var(--font-stone);
+      font-size: .55rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--stone-sub);
+      text-align: center;
+      padding: .55rem 1rem .25rem;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.4);
     }
-    .station-art {
-      width: 96px; height: 96px; border-radius: 4px;
-      background: linear-gradient(135deg, #180828, #280808);
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem; flex-shrink: 0;
-    }
-    .spinning { animation: spin 8s linear infinite; }
-    .spinning.paused { animation-play-state: paused; }
-    @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-    .track-info { flex: 1; min-width: 160px; }
-    .track-label {
-      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 0.3rem;
+    .stone-prev-item {
+      display: flex; align-items: baseline; gap: .5rem;
+      padding: .28rem 1.2rem;
+      border-top: 1px solid rgba(138,132,128,.25);
     }
-    .track-title {
-      font-family: var(--font-serif); font-size: 1.25rem;
-      color: var(--orange2); line-height: 1.2; margin-bottom: 0.3rem;
+    .stone-prev-n {
+      font-family: var(--font-mono); font-size: .56rem;
+      color: var(--stone-sub); width: 12px; flex-shrink: 0; text-align: right;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.3);
     }
-    .track-artist { font-size: 0.82rem; color: var(--purple2); }
+    .stone-prev-info { flex: 1; min-width: 0; }
+    .stone-prev-song {
+      font-family: var(--font-stone2); font-size: .74rem; font-weight: 600;
+      color: var(--stone-txt2);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.4), -1px -1px 0 rgba(0,0,0,.15);
+    }
+    .stone-prev-art {
+      font-family: var(--font-stone2); font-size: .58rem;
+      color: var(--stone-sub); font-style: italic;
+      text-shadow: 1px 1px 0 rgba(255,255,255,.3);
+    }
 
-    .controls { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    /* ── CONTROLS ── sit BELOW the stone, on the "ground" ── */
+    .stone-controls {
+      display: flex; align-items: center; gap: .8rem;
+      margin-top: .6rem;
+      padding: .55rem .9rem;
+      background: rgba(11,8,7,.75);
+      border: 1px solid rgba(200,120,10,.2);
+      border-radius: 2px;
+      backdrop-filter: blur(4px);
+    }
     .play-btn {
-      width: 54px; height: 54px; border-radius: 50%;
-      background: var(--orange); border: none; cursor: pointer;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--amber); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
-      transition: all 0.2s;
-      box-shadow: 0 0 18px rgba(255,106,0,0.45);
+      font-size: .85rem; color: #fff; flex-shrink: 0;
+      transition: all .18s; box-shadow: 0 2px 8px rgba(200,120,10,.5);
     }
-    .play-btn:hover { background: var(--orange2); transform: scale(1.08); }
-    .play-btn:active { transform: scale(0.95); }
+    .play-btn:hover{background:var(--amber2);transform:scale(1.08);}
+    .play-btn:active{transform:scale(.94);}
+    .vol-row{display:flex;align-items:center;gap:.35rem;flex:1;}
+    .vol-icon{font-size:.72rem;color:var(--sepia);}
+    input[type=range]{
+      -webkit-appearance:none;flex:1;height:2px;
+      background:rgba(255,255,255,.15);border-radius:1px;outline:none;cursor:pointer;
+    }
+    input[type=range]::-webkit-slider-thumb{
+      -webkit-appearance:none;width:11px;height:11px;border-radius:50%;
+      background:var(--amber);box-shadow:0 0 4px rgba(200,120,10,.5);
+    }
+    .sig-tag{
+      font-family:var(--font-mono);font-size:.56rem;
+      letter-spacing:.08em;color:var(--sepia);flex-shrink:0;
+    }
+    .sig-tag span{color:#4caf50;}
 
-    .volume-wrap { display:flex; align-items:center; gap:0.6rem; flex:1; min-width:100px; }
-    .vol-icon { font-size:0.9rem; color:var(--muted); }
-    input[type=range] {
-      -webkit-appearance: none; flex:1; height:3px;
-      background: var(--border); border-radius:2px; outline:none;
+    /* Dirt base — the stone sits in the ground */
+    .stone-dirt {
+      width: 85%; height: 10px; margin: 0 auto;
+      background: linear-gradient(to bottom, #1a1208, #0e0a06);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.6);
     }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
-      background:var(--orange); cursor:pointer;
-      box-shadow:0 0 8px rgba(255,106,0,0.6);
-    }
-    .stream-status { font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); margin-left:auto; }
-    .stream-status span { color: var(--green); }
 
-    #radio-audio { display:none; }
-
-    /* SONG HISTORY */
-    .section-header { display:flex; align-items:baseline; gap:1rem; margin-bottom:1.2rem; }
-    .section-title {
-      font-family: var(--font-spook); font-size: 2rem;
-      color: var(--purple2);
-      text-shadow: 0 0 18px rgba(123,47,255,0.55);
-      letter-spacing: 0.05em;
+    /* ── CONNECTION BANNER ── */
+    .conn-banner{
+      position:fixed;top:0;left:0;right:0;
+      background:var(--red2);color:var(--cream);
+      font-family:var(--font-mono);font-size:.65rem;
+      letter-spacing:.14em;text-align:center;padding:.32rem;
+      z-index:200;display:none;
     }
-    .section-line { flex:1; height:1px; background: linear-gradient(90deg, var(--border), transparent); }
+    .conn-banner.show{display:block;}
 
-    .history-list { display:flex; flex-direction:column; gap:2px; }
-    .history-item {
-      display:flex; align-items:center; gap:1rem;
-      padding:0.85rem 1.2rem;
-      background:var(--surface); border:1px solid transparent;
-      border-radius:2px; transition:all 0.2s; position:relative; overflow:hidden;
+    /* ── CHARACTERS ── */
+    .character{
+      position:fixed;bottom:0;z-index:10;pointer-events:none;
+      line-height:1;filter:drop-shadow(0 0 6px rgba(200,120,10,.35));
     }
-    .history-item:hover { border-color:var(--border); background:#111118; }
-    .history-item.current { border-color:rgba(255,106,0,0.4); background:rgba(255,106,0,0.05); }
-    .history-item.current::before {
-      content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--orange);
+    @keyframes walk-r {from{transform:translateX(-120px) scaleX(1);}  to{transform:translateX(110vw)  scaleX(1);}}
+    @keyframes walk-l {from{transform:translateX(110vw) scaleX(-1);}  to{transform:translateX(-120px) scaleX(-1);}}
+    @keyframes pop-up {
+      0%{transform:translateY(100px);opacity:0;}15%{transform:translateY(0);opacity:1;}
+      80%{transform:translateY(0);opacity:1;}100%{transform:translateY(110px);opacity:0;}
     }
-    .h-num { font-size:0.68rem; color:var(--muted); width:18px; text-align:right; flex-shrink:0; }
-    .history-item.current .h-num { color:var(--orange); }
-    .h-emoji { font-size:1.1rem; flex-shrink:0; }
-    .h-info { flex:1; min-width:0; }
-    .h-track {
-      font-family:var(--font-serif); font-size:0.88rem; color:var(--text);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    @keyframes floatd{
+      0%{transform:translate(-80px,0) rotate(-4deg);opacity:0;}10%{opacity:.8;}
+      50%{transform:translate(50vw,-35px) rotate(4deg);opacity:.8;}90%{opacity:.8;}
+      100%{transform:translate(110vw,8px) rotate(-3deg);opacity:0;}
     }
-    .h-artist { font-size:0.72rem; color:var(--muted); margin-top:0.1rem; }
-    .h-time { font-size:0.66rem; color:var(--muted); flex-shrink:0; }
-    .history-item.current .h-time { color:var(--orange); }
 
-    /* DIVIDER */
-    .divider { text-align:center; font-size:1.4rem; margin:2rem 0; letter-spacing:0.8rem; opacity:0.35; }
-
-    /* FOOTER */
-    footer {
-      text-align:center; padding:2.5rem 0 1rem; margin-top:3rem;
-      border-top:1px solid var(--border);
-      font-size:0.68rem; color:var(--muted); letter-spacing:0.12em;
-      line-height:2;
+    /* ── FOOTER ── */
+    .site-footer{
+      position:fixed;bottom:0;left:0;right:0;z-index:5;
+      text-align:center;padding:.45rem;
+      font-family:var(--font-mono);font-size:.56rem;
+      letter-spacing:.1em;color:var(--sepia);
+      background:linear-gradient(to top,rgba(11,8,7,.95),transparent);
+      pointer-events:none;
     }
-    footer a { color:var(--orange); text-decoration:none; }
-    footer a:hover { color:var(--orange2); }
+    .site-footer a{color:var(--amber);pointer-events:all;text-decoration:none;}
 
-    @media (max-width:580px) {
-      .bat-left,.bat-right { font-size:1.3rem; }
-      .now-playing-wrap { flex-direction:column; align-items:flex-start; }
+    @media(max-width:480px){
+      .haunted-house{width:190px;}.dead-trees{width:130px;}
     }
   </style>
 </head>
 <body>
 
-<div class="particles" id="particles"></div>
-<audio id="radio-audio" preload="none">
-  <!-- 🔧 REPLACE THIS URL with your actual stream (Shoutcast/Icecast/Radio.co/Zeno.fm etc.) -->
-  <source src="YOUR_STREAM_URL_HERE" type="audio/mpeg"/>
-</audio>
+<div class="conn-banner" id="conn-banner">⚠ Cannot reach Navidrome — showing demo data</div>
 
-<div class="wrapper">
+<!-- ═══ SCENE ═══ -->
+<div class="scene">
+  <div class="scene-sky"></div>
+  <div class="stars"></div>
+  <div class="moon"></div>
+  <div class="cloud" style="left:-10%">☁</div>
+  <div class="cloud" style="left:30%">☁</div>
+  <div class="cloud" style="left:68%">☁</div>
 
-  <header>
-    <div class="bat-left">🦇</div>
-    <div class="bat-right">🦇</div>
-    <div class="station-eyebrow">📻 Broadcasting Live 24/7</div>
-    <h1 class="station-name">HELLOWEEN</h1>
-    <p class="station-tagline">Radio · Where Every Night Is Halloween</p>
-    <div class="live-badge"><span class="live-dot"></span> On Air</div>
+  <!-- HAUNTED HOUSE -->
+  <svg class="haunted-house" viewBox="0 0 320 410" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="58"  y="195" width="190" height="215" fill="#0a0704"/>
+    <rect x="18"  y="235" width="58"  height="175" fill="#080503"/>
+    <rect x="230" y="215" width="68"  height="195" fill="#090604"/>
+    <polygon points="38,195 153,78 308,195"  fill="#070503"/>
+    <polygon points="4,235  47,158  92,235"  fill="#060402"/>
+    <polygon points="222,215 264,128 306,215" fill="#060402"/>
+    <polygon points="105,148 153,98 201,148" fill="#080503"/>
+    <rect x="192" y="68" width="19" height="48" fill="#060402"/>
+    <rect x="190" y="64" width="23" height="7"  fill="#070503"/>
+    <rect x="137" y="116" width="30" height="22" rx="1" fill="#3a2200" class="win-flicker"/>
+    <line x1="152" y1="116" x2="152" y2="138" stroke="#1a0e00" stroke-width="1"/>
+    <line x1="137" y1="127" x2="167" y2="127" stroke="#1a0e00" stroke-width="1"/>
+    <rect x="72"  y="285" width="36" height="42" rx="1" fill="#2a1500" class="win-flicker2"/>
+    <line x1="90"  y1="285" x2="90"  y2="327" stroke="#1a0e00" stroke-width="1"/>
+    <line x1="72"  y1="306" x2="108" y2="306" stroke="#1a0e00" stroke-width="1"/>
+    <rect x="140" y="285" width="36" height="42" rx="1" fill="#1e1000" class="win-flicker3"/>
+    <line x1="158" y1="285" x2="158" y2="327" stroke="#1a0e00" stroke-width="1"/>
+    <line x1="140" y1="306" x2="176" y2="306" stroke="#1a0e00" stroke-width="1"/>
+    <path d="M242 236 Q242 223 250 223 Q258 223 258 236 L258 254 L242 254 Z" fill="#2a0800" class="win-flicker"/>
+    <rect x="242" y="274" width="16" height="20" rx="1" fill="#1a0800" class="win-flicker2"/>
+    <rect x="25"  y="262" width="24" height="28" rx="1" fill="#221200" class="win-flicker3"/>
+    <path d="M141 410 L141 355 Q141 344 152 344 Q163 344 163 355 L163 410 Z" fill="#060402"/>
+    <circle cx="160" cy="383" r="2" fill="#2a1800"/>
+    <line x1="8"  y1="390" x2="8"  y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="26" y1="388" x2="26" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="44" y1="390" x2="44" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="258" y1="390" x2="258" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="276" y1="388" x2="276" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="294" y1="390" x2="294" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="312" y1="388" x2="312" y2="410" stroke="#1a1008" stroke-width="3"/>
+    <line x1="4"   y1="400" x2="54"  y2="400" stroke="#1a1008" stroke-width="2"/>
+    <line x1="254" y1="400" x2="316" y2="400" stroke="#1a1008" stroke-width="2"/>
+    <path d="M208 55 Q211 50 215 52 Q213 56 218 54 Q215 60 211 58 Q209 62 206 60 Q202 63 198 58 Q203 56 201 51 Q205 53 208 55Z" fill="#0a0603"/>
+    <path d="M282 82 Q285 77 289 79 Q287 83 292 81 Q289 87 285 85 Q283 89 280 87 Q277 90 274 86 Q278 84 276 79 Q280 81 282 82Z" fill="#090502"/>
+  </svg>
+
+  <!-- DEAD TREES -->
+  <svg class="dead-trees" viewBox="0 0 240 390" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="55" y1="390" x2="55" y2="118" stroke="#0d0a06" stroke-width="6"/>
+    <line x1="55" y1="175" x2="18" y2="128" stroke="#0d0a06" stroke-width="3"/>
+    <line x1="55" y1="195" x2="94" y2="152" stroke="#0d0a06" stroke-width="3"/>
+    <line x1="55" y1="225" x2="13" y2="196" stroke="#0d0a06" stroke-width="2"/>
+    <line x1="55" y1="235" x2="90" y2="212" stroke="#0d0a06" stroke-width="2"/>
+    <line x1="55" y1="148" x2="28" y2="108" stroke="#0d0a06" stroke-width="2.5"/>
+    <line x1="55" y1="158" x2="84" y2="123" stroke="#0d0a06" stroke-width="2.5"/>
+    <line x1="18" y1="128" x2="6"  y2="113" stroke="#0d0a06" stroke-width="1.5"/>
+    <line x1="94" y1="152" x2="106" y2="138" stroke="#0d0a06" stroke-width="1.5"/>
+    <line x1="28" y1="108" x2="16" y2="96"  stroke="#0d0a06" stroke-width="1"/>
+    <line x1="28" y1="108" x2="33" y2="93"  stroke="#0d0a06" stroke-width="1"/>
+    <line x1="84" y1="123" x2="94" y2="110" stroke="#0d0a06" stroke-width="1"/>
+    <line x1="55" y1="118" x2="50" y2="78"  stroke="#0d0a06" stroke-width="4"/>
+    <line x1="50" y1="78"  x2="57" y2="38"  stroke="#0d0a06" stroke-width="3"/>
+    <line x1="182" y1="390" x2="187" y2="215" stroke="#0c0906" stroke-width="8"/>
+    <line x1="187" y1="255" x2="134" y2="205" stroke="#0c0906" stroke-width="4"/>
+    <line x1="187" y1="245" x2="236" y2="196" stroke="#0c0906" stroke-width="4"/>
+    <line x1="134" y1="205" x2="110" y2="180" stroke="#0c0906" stroke-width="2.5"/>
+    <line x1="236" y1="196" x2="238" y2="174" stroke="#0c0906" stroke-width="2.5"/>
+    <line x1="187" y1="215" x2="182" y2="175" stroke="#0c0906" stroke-width="5"/>
+    <line x1="182" y1="175" x2="177" y2="145" stroke="#0c0906" stroke-width="4"/>
+    <line x1="177" y1="145" x2="170" y2="115" stroke="#0c0906" stroke-width="3"/>
+    <line x1="177" y1="145" x2="197" y2="125" stroke="#0c0906" stroke-width="2.5"/>
+    <line x1="197" y1="125" x2="207" y2="108" stroke="#0c0906" stroke-width="1.5"/>
+    <line x1="170" y1="115" x2="160" y2="100" stroke="#0c0906" stroke-width="1.5"/>
+  </svg>
+
+  <div class="ground-sil"></div>
+  <div class="fog"></div>
+</div>
+
+<!-- ═══ PAGE ═══ -->
+<div class="page">
+
+  <header class="station-header">
+    <div class="bat-l">🦇</div>
+    <div class="bat-r">🦇</div>
+    <div class="eyebrow">☽ Broadcasting from the Beyond ☾</div>
+    <h1 class="station-title">Helloween</h1>
+    <p class="station-sub">Radio · Est. All Hallows Eve</p>
+    <div class="on-air"><span class="on-air-dot"></span> On Air 24/7</div>
   </header>
 
-  <div class="player-card">
-    <div class="visualizer" id="visualizer"></div>
-    <div class="now-playing-wrap">
-      <div class="station-art"><span id="art-icon" class="spinning">🎃</span></div>
-      <div class="track-info">
-        <div class="track-label">Now Playing</div>
-        <div class="track-title" id="track-title">Thriller</div>
-        <div class="track-artist" id="track-artist">Michael Jackson</div>
+  <!-- ══════════════════════════════
+       TOMBSTONE WIDGET
+       ══════════════════════════════ -->
+  <div class="tombstone-wrap">
+
+    <div class="tombstone">
+
+      <!-- Cross ornament at arch top -->
+      <div class="stone-ornament">✝ ✦ ✝</div>
+
+      <div class="stone-rule"></div>
+      <div class="stone-rule-double"></div>
+
+      <!-- NOW PLAYING -->
+      <div class="here-lies">Now Playing</div>
+
+      <!-- Song title — THE name on the stone -->
+      <div class="stone-song" id="w-song">Connecting…</div>
+
+      <!-- Artist -->
+      <div class="stone-artist" id="w-artist">—</div>
+
+      <!-- Album — in italics like a birth/death year -->
+      <div class="stone-album" id="w-album">—</div>
+
+      <!-- Tiny visualizer -->
+      <div class="stone-viz" id="stone-viz"></div>
+
+      <div class="stone-rule"></div>
+
+      <!-- Previously played -->
+      <div class="stone-prev-head">~ Preceded in Death by ~</div>
+      <div id="prev-list"></div>
+
+      <!-- Bottom ornament -->
+      <div class="stone-ornament" style="padding-top:.6rem;padding-bottom:.4rem;font-size:.8rem;opacity:.4;">
+        ✦ R.I.P. ✦
       </div>
-    </div>
-    <div class="controls">
-      <button class="play-btn" id="play-btn" onclick="togglePlay()">▶</button>
-      <div class="volume-wrap">
+
+    </div><!-- end .tombstone -->
+
+    <!-- Dirt base -->
+    <div class="stone-dirt"></div>
+
+    <!-- Controls sit below the stone -->
+    <div class="stone-controls">
+      <button class="play-btn" id="play-btn" onclick="togglePlay()" title="Play / Pause">▶</button>
+      <div class="vol-row">
         <span class="vol-icon">🔈</span>
         <input type="range" id="volume" min="0" max="1" step="0.02" value="0.8" oninput="setVol(this.value)"/>
         <span class="vol-icon">🔊</span>
       </div>
-      <div class="stream-status">STREAM <span id="stream-label">READY</span></div>
+      <div class="sig-tag">SIG <span id="sig-lbl">—</span></div>
     </div>
-  </div>
 
-  <div class="divider">🎃 🕷️ 🦇 🕷️ 🎃</div>
+  </div><!-- end .tombstone-wrap -->
 
-  <div class="section-header">
-    <h2 class="section-title">Crypt of Sounds</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="history-list" id="history-list"></div>
+</div><!-- end page -->
 
-  <footer>
-    <div>HELLOWEEN RADIO &nbsp;·&nbsp; 24/7 Halloween Broadcasting</div>
-    <div>
-      Built by <a href="https://github.com/primrose99" target="_blank">primrose99</a>
-      &nbsp;·&nbsp;
-      <a href="https://github.com/primrose99/Helloween" target="_blank">View on GitHub ↗</a>
-      &nbsp;·&nbsp; Powered by Claude AI
-    </div>
-  </footer>
+<div id="char-layer"></div>
 
-</div>
+<footer class="site-footer">
+  HELLOWEEN RADIO &nbsp;·&nbsp;
+  <a href="https://github.com/primrose99/Helloween" target="_blank">github.com/primrose99/Helloween</a>
+  &nbsp;·&nbsp; Built with Claude AI
+</footer>
+
+<audio id="radio-audio" preload="none"></audio>
 
 <script>
-  // ── SONG DATA ──────────────────────────────────────────────────
-  // Replace / extend this array with real data from your stream's metadata API
-  const songs = [
-    { title:"Thriller",              artist:"Michael Jackson",    time:"NOW",   emoji:"🧟" },
-    { title:"Monster Mash",          artist:"Bobby Pickett",      time:"10:42", emoji:"🧛" },
-    { title:"This Is Halloween",     artist:"Marilyn Manson",     time:"10:38", emoji:"🎃" },
-    { title:"People Are Strange",    artist:"The Doors",          time:"10:33", emoji:"🚪" },
-    { title:"Ghostbusters",          artist:"Ray Parker Jr.",     time:"10:29", emoji:"👻" },
-    { title:"Highway to Hell",       artist:"AC/DC",              time:"10:24", emoji:"🔥" },
-    { title:"Bat Out of Hell",       artist:"Meat Loaf",          time:"10:19", emoji:"🦇" },
-    { title:"Werewolves of London",  artist:"Warren Zevon",       time:"10:15", emoji:"🐺" },
-    { title:"Paint It Black",        artist:"The Rolling Stones", time:"10:11", emoji:"🖤" },
-    { title:"Time Warp",             artist:"Rocky Horror Cast",  time:"10:06", emoji:"⏳" },
-  ];
+/* ══════════════════════════════════════════
+   ██  CONFIGURATION — edit these 4 values  ██
+   ══════════════════════════════════════════ */
+const CONFIG = {
+  serverUrl:  'http://YOUR-NAVIDROME-IP:4533',  // ✏️ Your Navidrome address
+  username:   'YOUR_USERNAME',                   // ✏️ Your Navidrome username
+  password:   'YOUR_PASSWORD',                   // ✏️ Your Navidrome password
+  streamUrl:  'http://YOUR-NAVIDROME-IP:8000/stream', // ✏️ Your stream URL
+  refreshMs:  10000,
+};
+/* ══════════════════════════════════════════ */
 
-  function renderHistory() {
-    document.getElementById('history-list').innerHTML = songs.map((s,i) => `
-      <div class="history-item ${i===0?'current':''}">
-        <span class="h-num">${i===0?'▶':i}</span>
-        <span class="h-emoji">${s.emoji}</span>
-        <div class="h-info">
-          <div class="h-track">${s.title}</div>
-          <div class="h-artist">${s.artist}</div>
-        </div>
-        <span class="h-time">${s.time}</span>
-      </div>`).join('');
+/* ── SUBSONIC API ── */
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
+}
+async function apiParams() {
+  const salt = Math.random().toString(36).slice(2,10);
+  const tok  = await sha256hex(CONFIG.password + salt);
+  return `u=${encodeURIComponent(CONFIG.username)}&t=${tok}&s=${salt}&v=1.16.0&c=HelloweenRadio&f=json`;
+}
+async function naviGet(endpoint, extra='') {
+  const p   = await apiParams();
+  const res = await fetch(`${CONFIG.serverUrl}/rest/${endpoint}?${p}${extra}`,
+    { signal: AbortSignal.timeout(6000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const d = await res.json();
+  const r = d['subsonic-response'];
+  if (r.status !== 'ok') throw new Error(r.error?.message || 'API error');
+  return r;
+}
+async function fetchNowPlaying() {
+  const r    = await naviGet('getNowPlaying');
+  const list = r.nowPlaying?.entry || [];
+  if (list.length > 0) return { current: list[0], history: list.slice(1,3) };
+  const r2   = await naviGet('getAlbumList','&type=recent&size=3');
+  const albs = r2.albumList?.album || [];
+  if (!albs.length) return null;
+  return {
+    current: { title:albs[0].name, artist:albs[0].artist, album:albs[0].name },
+    history: albs.slice(1).map(a=>({ title:a.name, artist:a.artist, album:a.name }))
+  };
+}
+
+/* ── DEMO DATA ── */
+const DEMO = [
+  { title:'Thriller',             artist:'Michael Jackson',  album:'Thriller' },
+  { title:'Monster Mash',         artist:'Bobby Pickett',    album:'Monster Mash' },
+  { title:'This Is Halloween',    artist:'Marilyn Manson',   album:'Nightmare Revisited' },
+  { title:'Bat Out of Hell',      artist:'Meat Loaf',        album:'Bat Out of Hell' },
+  { title:'Ghostbusters',         artist:'Ray Parker Jr.',   album:'Ghostbusters OST' },
+  { title:'Highway to Hell',      artist:'AC/DC',            album:'Highway to Hell' },
+  { title:'People Are Strange',   artist:'The Doors',        album:'Strange Days' },
+  { title:'Werewolves of London', artist:'Warren Zevon',     album:'Excitable Boy' },
+];
+let demoIdx=0, demoMode=false;
+
+/* ── VISUALIZER ── */
+const vizEl = document.getElementById('stone-viz');
+for (let i=0;i<28;i++){
+  const b=document.createElement('div');
+  b.className='sv-bar paused';
+  b.style.cssText=`height:${6+Math.random()*12}px;animation-duration:${(.25+Math.random()*.5).toFixed(2)}s;animation-delay:${(Math.random()*1).toFixed(2)}s;`;
+  vizEl.appendChild(b);
+}
+
+/* ── RENDER ── */
+function renderNowPlaying(song, history) {
+  document.getElementById('w-song').textContent   = song.title  || '—';
+  document.getElementById('w-artist').textContent = song.artist || '—';
+  document.getElementById('w-album').textContent  = song.album  || '';
+  const pl = document.getElementById('prev-list');
+  pl.innerHTML = (history||[]).slice(0,2).map((s,i)=>`
+    <div class="stone-prev-item">
+      <span class="stone-prev-n">${i+1}</span>
+      <div class="stone-prev-info">
+        <div class="stone-prev-song">${s.title||'—'}</div>
+        <div class="stone-prev-art">${s.artist||''}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── PLAYER ── */
+const audio=document.getElementById('radio-audio');
+audio.volume=0.8;
+let playing=false;
+function togglePlay(){
+  const btn=document.getElementById('play-btn');
+  const sig=document.getElementById('sig-lbl');
+  if(playing){
+    audio.pause(); playing=false;
+    btn.textContent='▶';
+    document.querySelectorAll('.sv-bar').forEach(b=>b.classList.add('paused'));
+    sig.textContent='PAUSED';sig.style.color='';
+  } else {
+    sig.textContent='TUNING';sig.style.color='#e8a030';
+    audio.src=CONFIG.streamUrl;
+    audio.play()
+      .then(()=>setPlaying())
+      .catch(()=>{setPlaying();sig.textContent='DEMO';sig.style.color='';});
   }
-  renderHistory();
+}
+function setPlaying(){
+  playing=true;
+  document.getElementById('play-btn').textContent='⏸';
+  document.querySelectorAll('.sv-bar').forEach(b=>b.classList.remove('paused'));
+  const sig=document.getElementById('sig-lbl');
+  if(sig.textContent!=='DEMO'){sig.textContent='LIVE';sig.style.color='#4caf50';}
+}
+function setVol(v){audio.volume=parseFloat(v);}
 
-  // ── VISUALIZER ────────────────────────────────────────────────
-  const viz = document.getElementById('visualizer');
-  for (let i = 0; i < 44; i++) {
-    const b = document.createElement('div');
-    b.className = 'bar paused';
-    b.style.cssText = `height:${18+Math.random()*38}px;animation-duration:${(.35+Math.random()*.75).toFixed(2)}s;animation-delay:${(Math.random()*1.4).toFixed(2)}s;`;
-    viz.appendChild(b);
-  }
-
-  // ── PLAYER ────────────────────────────────────────────────────
-  const audio  = document.getElementById('radio-audio');
-  const btn    = document.getElementById('play-btn');
-  const art    = document.getElementById('art-icon');
-  const label  = document.getElementById('stream-label');
-  let playing  = false;
-  audio.volume = 0.8;
-
-  function togglePlay() {
-    if (playing) {
-      audio.pause();
-      setState(false);
-    } else {
-      label.textContent = 'LOADING…';
-      label.style.color = 'var(--orange2)';
-      audio.play()
-        .then(() => setState(true))
-        .catch(() => { setState(true); label.textContent = 'DEMO'; });
+/* ── POLL ── */
+async function poll(){
+  try{
+    const d=await fetchNowPlaying();
+    if(d){
+      demoMode=false;
+      document.getElementById('conn-banner').classList.remove('show');
+      renderNowPlaying(d.current,d.history);
     }
+  }catch(e){
+    if(!demoMode){demoMode=true;document.getElementById('conn-banner').classList.add('show');}
+    const cur =DEMO[demoIdx%DEMO.length];
+    const p1  =DEMO[(demoIdx+DEMO.length-1)%DEMO.length];
+    const p2  =DEMO[(demoIdx+DEMO.length-2)%DEMO.length];
+    renderNowPlaying(cur,[p1,p2]);
+    demoIdx++;
   }
+}
+poll();
+setInterval(poll, CONFIG.refreshMs);
 
-  function setState(on) {
-    playing = on;
-    btn.textContent = on ? '⏸' : '▶';
-    document.querySelectorAll('.bar').forEach(b => b.classList.toggle('paused', !on));
-    art.classList.toggle('paused', !on);
-    label.textContent  = on ? 'LIVE'  : 'PAUSED';
-    label.style.color  = on ? 'var(--green)' : 'var(--muted)';
+/* ── CHARACTERS ── */
+const CHARS=[
+  {emoji:'🧛',move:'float'},{emoji:'🐺',move:'walk'},{emoji:'🧟',move:'walk'},
+  {emoji:'🧙',move:'float'},{emoji:'🔪',move:'walk'},{emoji:'🩸',move:'walk'},
+  {emoji:'👁️',move:'popup'},{emoji:'🪓',move:'walk'},{emoji:'💀',move:'float'},
+  {emoji:'👻',move:'float'},{emoji:'🎃',move:'popup'},{emoji:'🕷️',move:'walk'},
+];
+const charLayer=document.getElementById('char-layer');
+function spawnChar(){
+  const c=CHARS[Math.floor(Math.random()*CHARS.length)];
+  const el=document.createElement('div');
+  el.className='character';
+  el.textContent=c.emoji;
+  el.style.fontSize=(2+Math.random()*2)+'rem';
+  const dur=9+Math.random()*14;
+  if(c.move==='walk'){
+    const r=Math.random()>.5;
+    el.style.bottom=(1+Math.random()*5)+'%';
+    el.style.left='0';
+    el.style.animationName=r?'walk-r':'walk-l';
+    el.style.animationDuration=dur+'s';
+    el.style.animationTimingFunction='linear';
+    el.style.animationFillMode='forwards';
+  } else if(c.move==='float'){
+    el.style.bottom=(12+Math.random()*45)+'%';
+    el.style.left='-80px';
+    el.style.animationName='floatd';
+    el.style.animationDuration=(dur+5)+'s';
+    el.style.animationTimingFunction='ease-in-out';
+    el.style.animationFillMode='forwards';
+  } else {
+    el.style.bottom='0';
+    el.style.left=(5+Math.random()*85)+'vw';
+    el.style.animationName='pop-up';
+    el.style.animationDuration=(4+Math.random()*5)+'s';
+    el.style.animationTimingFunction='ease-in-out';
+    el.style.animationFillMode='forwards';
   }
-
-  function setVol(v) { audio.volume = parseFloat(v); }
-
-  // ── FLOATING PARTICLES ────────────────────────────────────────
-  const icons = ['🎃','🦇','👻','🕷️','🕸️','💀','🖤','🌑','⚰️','🧛'];
-  const pc    = document.getElementById('particles');
-  function spawn() {
-    const p = document.createElement('div');
-    p.className   = 'particle';
-    p.textContent = icons[Math.floor(Math.random()*icons.length)];
-    p.style.left  = Math.random()*100 + 'vw';
-    p.style.bottom = '-30px';
-    p.style.fontSize = (.7+Math.random()*1.1)+'rem';
-    const dur = 9+Math.random()*10;
-    p.style.animationDuration = dur+'s';
-    pc.appendChild(p);
-    setTimeout(()=>p.remove(), dur*1000);
-  }
-  for (let i=0;i<10;i++) setTimeout(spawn, Math.random()*5000);
-  setInterval(spawn, 2800);
-
-  // ── SIMULATE NOW PLAYING ROTATION ────────────────────────────
-  // In production: replace with fetch() to your stream metadata endpoint
-  setInterval(()=>{
-    const s = songs.splice(1,1)[0] || songs[0];
-    const prev = songs[0];
-    prev.time = new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-    s.time = 'NOW';
-    songs.unshift(s);
-    document.getElementById('track-title').textContent  = s.title;
-    document.getElementById('track-artist').textContent = s.artist;
-    art.textContent = s.emoji;
-    renderHistory();
-  }, 210000); // every 3.5 min
+  charLayer.appendChild(el);
+  setTimeout(()=>el.remove(),(dur+7)*1000);
+}
+function scheduleChar(){spawnChar();setTimeout(scheduleChar,4500+Math.random()*10000);}
+setTimeout(scheduleChar,2000);
+setTimeout(spawnChar,600);
+setTimeout(spawnChar,1800);
 </script>
 </body>
 </html>
