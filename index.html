@@ -1047,35 +1047,75 @@ function setPlaying(){
 }
 function setVol(v){audio.volume=parseFloat(v);}
 
-/* ── POLL ── */
-async function poll(){
-  // If no server configured, silently use demo data — no banner
-  if(!CONFIG.serverUrl || CONFIG.serverUrl.trim()===''){
-    const cur =DEMO[demoIdx%DEMO.length];
-    const p1  =DEMO[(demoIdx+DEMO.length-1)%DEMO.length];
-    const p2  =DEMO[(demoIdx+DEMO.length-2)%DEMO.length];
-    renderNowPlaying(cur,[p1,p2]);
-    demoIdx++;
-    return;
+/* ── ICECAST METADATA POLL ──
+   Pulls now-playing data directly from Icecast's public status endpoint.
+   No credentials needed — completely safe in public code.
+   ✏️ Set ICECAST_STATUS to your Icecast server's status-json.xsl URL.
+   This must be accessible from the browser — use your Cloudflare tunnel URL.
+*/
+const ICECAST_STATUS = 'https://draw-unto-ladies-marketing.trycloudflare.com/status-json.xsl';
+
+// Keep a rolling history of last 2 songs
+let songHistory = [];
+
+function parseTitleArtist(raw) {
+  // Icecast title field is often "artist - title" or "artist - album - title"
+  // Try to split on first " - "
+  if (!raw) return { title: '—', artist: '—', album: '' };
+  const parts = raw.split(' - ');
+  if (parts.length >= 2) {
+    return {
+      artist: toTitleCase(parts[0].trim()),
+      title:  toTitleCase(parts.slice(1).join(' - ').trim()),
+      album:  ''
+    };
   }
-  try{
-    const d=await fetchNowPlaying();
-    if(d){
-      demoMode=false;
-      document.getElementById('conn-banner').classList.remove('show');
-      renderNowPlaying(d.current,d.history);
+  return { title: toTitleCase(raw.trim()), artist: '—', album: '' };
+}
+
+function toTitleCase(str) {
+  // Convert "has the devil got a mortgage on you" to "Has The Devil Got A Mortgage On You"
+  return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+}
+
+let lastTitle = '';
+
+async function poll(){
+  try {
+    const res = await fetch(ICECAST_STATUS, { signal: AbortSignal.timeout(6000) });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const src  = data?.icestats?.source;
+    if (!src) throw new Error('No source');
+
+    const raw    = src.title || '';
+    const parsed = parseTitleArtist(raw);
+
+    // If song changed, push old one to history
+    if (lastTitle && lastTitle !== raw) {
+      const oldParsed = parseTitleArtist(lastTitle);
+      songHistory.unshift(oldParsed);
+      if (songHistory.length > 2) songHistory = songHistory.slice(0, 2);
     }
-  }catch(e){
-    if(!demoMode){demoMode=true;document.getElementById('conn-banner').classList.add('show');}
-    const cur =DEMO[demoIdx%DEMO.length];
-    const p1  =DEMO[(demoIdx+DEMO.length-1)%DEMO.length];
-    const p2  =DEMO[(demoIdx+DEMO.length-2)%DEMO.length];
-    renderNowPlaying(cur,[p1,p2]);
+    lastTitle = raw;
+
+    document.getElementById('conn-banner').classList.remove('show');
+    renderNowPlaying(parsed, songHistory);
+
+  } catch(e) {
+    // Fallback to demo if Icecast unreachable
+    if (!demoMode) {
+      demoMode = true;
+      document.getElementById('conn-banner').classList.add('show');
+    }
+    const cur = DEMO[demoIdx % DEMO.length];
+    const p1  = DEMO[(demoIdx + DEMO.length - 1) % DEMO.length];
+    const p2  = DEMO[(demoIdx + DEMO.length - 2) % DEMO.length];
+    renderNowPlaying(cur, [p1, p2]);
     demoIdx++;
   }
 }
 poll();
-// Poll for now-playing metadata every 10s — Liquidsoap handles full song playback
 setInterval(poll, CONFIG.refreshMs);
 
 /* ── CHARACTERS ── */
