@@ -660,10 +660,10 @@
    ██  CONFIGURATION — edit these 4 values  ██
    ══════════════════════════════════════════ */
 const CONFIG = {
-  serverUrl:  '',        // ← leave blank, not using Navidrome
-  username:   '',        // ← leave blank
-  password:   '',        // ← leave blank
-  streamUrl:  'http://192.168.4.147:8000/helloween',  // ← your stream
+  serverUrl:  'http://YOUR-NAVIDROME-IP:4533',  // ✏️ Your Navidrome address
+  username:   'YOUR_USERNAME',                   // ✏️ Your Navidrome username
+  password:   'YOUR_PASSWORD',                   // ✏️ Your Navidrome password
+  streamUrl:  'http://YOUR-NAVIDROME-IP:8000/stream', // ✏️ Your stream URL
   refreshMs:  10000,
 };
 /* ══════════════════════════════════════════ */
@@ -770,6 +770,15 @@ function setVol(v){audio.volume=parseFloat(v);}
 
 /* ── POLL ── */
 async function poll(){
+  // If no server configured, silently use demo data — no banner
+  if(!CONFIG.serverUrl || CONFIG.serverUrl.trim()===''){
+    const cur =DEMO[demoIdx%DEMO.length];
+    const p1  =DEMO[(demoIdx+DEMO.length-1)%DEMO.length];
+    const p2  =DEMO[(demoIdx+DEMO.length-2)%DEMO.length];
+    renderNowPlaying(cur,[p1,p2]);
+    demoIdx++;
+    return;
+  }
   try{
     const d=await fetchNowPlaying();
     if(d){
