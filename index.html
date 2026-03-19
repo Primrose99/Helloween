@@ -221,6 +221,42 @@
       pointer-events: none;
     }
 
+    /* ── TOP PLAYER WIDGET ── */
+    .stone-top-player {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .7rem;
+      padding: 1rem 1rem .2rem;
+    }
+    .stone-top-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: #2e2a26;
+      border: 2px solid var(--stone-crack);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem;
+      color: var(--stone-light);
+      transition: all .18s;
+      box-shadow:
+        inset 1px 1px 3px rgba(255,255,255,.2),
+        inset -1px -1px 3px rgba(0,0,0,.4),
+        0 2px 8px rgba(0,0,0,.4);
+      flex-shrink: 0;
+    }
+    .stone-top-btn:hover { background: #3d3830; transform: scale(1.08); }
+    .stone-top-btn:active { transform: scale(.94); }
+    .stone-top-sig {
+      display: flex; align-items: center; gap: .35rem;
+    }
+    .stone-top-live {
+      font-size: .5rem;
+      color: var(--stone-crack);
+      animation: pdot 1.2s ease-in-out infinite;
+    }
+    .stone-top-live.live { color: #4caf50; }
+
     /* ── ARCH ORNAMENT — decorative cross at top ── */
     .stone-ornament {
       display: flex; justify-content: center; align-items: center;
@@ -593,6 +629,15 @@
 
     <div class="tombstone">
 
+      <!-- Mini play widget at arch top — Christmix style -->
+      <div class="stone-top-player">
+        <button class="stone-top-btn" id="play-btn-top" onclick="togglePlay()" title="Play / Pause">▶</button>
+        <div class="stone-top-sig">
+          <span class="stone-top-live" id="top-live-dot">●</span>
+          <span id="top-sig-lbl" style="font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;color:var(--stone-sub);">TUNE IN</span>
+        </div>
+      </div>
+
       <!-- Cross ornament at arch top -->
       <div class="stone-ornament">✝ ✦ ✝</div>
 
@@ -632,7 +677,6 @@
 
     <!-- Controls sit below the stone -->
     <div class="stone-controls">
-      <button class="play-btn" id="play-btn" onclick="togglePlay()" title="Play / Pause">▶</button>
       <div class="vol-row">
         <span class="vol-icon">🔈</span>
         <input type="range" id="volume" min="0" max="1" step="0.02" value="0.8" oninput="setVol(this.value)"/>
@@ -660,10 +704,10 @@
    ██  CONFIGURATION — edit these 4 values  ██
    ══════════════════════════════════════════ */
 const CONFIG = {
-  serverUrl:  '',
-  username:   '',
-  password:   '',
-  streamUrl:  'http://192.168.4.147:8000/helloween',
+  serverUrl:  'http://YOUR-NAVIDROME-IP:4533',  // ✏️ Your Navidrome address
+  username:   'YOUR_USERNAME',                   // ✏️ Your Navidrome username
+  password:   'YOUR_PASSWORD',                   // ✏️ Your Navidrome password
+  streamUrl:  'http://YOUR-NAVIDROME-IP:8000/stream', // ✏️ Your stream URL
   refreshMs:  10000,
 };
 /* ══════════════════════════════════════════ */
@@ -744,15 +788,20 @@ const audio=document.getElementById('radio-audio');
 audio.volume=0.8;
 let playing=false;
 function togglePlay(){
-  const btn=document.getElementById('play-btn');
+  const btnTop=document.getElementById('play-btn-top');
   const sig=document.getElementById('sig-lbl');
+  const topSig=document.getElementById('top-sig-lbl');
+  const liveDot=document.getElementById('top-live-dot');
   if(playing){
     audio.pause(); playing=false;
-    btn.textContent='▶';
+    if(btnTop) btnTop.textContent='▶';
     document.querySelectorAll('.sv-bar').forEach(b=>b.classList.add('paused'));
-    sig.textContent='PAUSED';sig.style.color='';
+    sig.textContent='PAUSED'; sig.style.color='';
+    if(topSig) topSig.textContent='TUNE IN';
+    if(liveDot) liveDot.classList.remove('live');
   } else {
-    sig.textContent='TUNING';sig.style.color='#e8a030';
+    sig.textContent='TUNING'; sig.style.color='#e8a030';
+    if(topSig) topSig.textContent='TUNING…';
     audio.src=CONFIG.streamUrl;
     audio.play()
       .then(()=>setPlaying())
@@ -761,10 +810,15 @@ function togglePlay(){
 }
 function setPlaying(){
   playing=true;
-  document.getElementById('play-btn').textContent='⏸';
+  const btnTop=document.getElementById('play-btn-top');
+  if(btnTop) btnTop.textContent='⏸';
   document.querySelectorAll('.sv-bar').forEach(b=>b.classList.remove('paused'));
   const sig=document.getElementById('sig-lbl');
+  const topSig=document.getElementById('top-sig-lbl');
+  const liveDot=document.getElementById('top-live-dot');
   if(sig.textContent!=='DEMO'){sig.textContent='LIVE';sig.style.color='#4caf50';}
+  if(topSig) topSig.textContent='ON AIR';
+  if(liveDot) liveDot.classList.add('live');
 }
 function setVol(v){audio.volume=parseFloat(v);}
 
@@ -796,6 +850,7 @@ async function poll(){
   }
 }
 poll();
+// Poll for now-playing metadata every 10s — Liquidsoap handles full song playback
 setInterval(poll, CONFIG.refreshMs);
 
 /* ── CHARACTERS ── */
