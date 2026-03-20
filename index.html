@@ -713,7 +713,217 @@
       text-align: center;
     }
 
+    /* ── CREEPY OLD TV ── */
+    .tv-wrap {
+      position: fixed;
+      bottom: 0;
+      right: 2%;
+      width: clamp(120px, 16vw, 200px);
+      z-index: 15;
+      pointer-events: none;
+
+    }
+
+    .tv-body {
+      position: relative;
+      width: 100%;
+      padding-bottom: 90%;
+      background: linear-gradient(160deg, #3a3530 0%, #2a2520 40%, #1e1a16 100%);
+      border-radius: 8px 8px 4px 4px;
+      box-shadow:
+        inset 3px 3px 8px rgba(255,255,255,.08),
+        inset -3px -3px 8px rgba(0,0,0,.6),
+        0 8px 20px rgba(0,0,0,.8);
+    }
+
+    /* Dirt and grime streaks */
+    .tv-body::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 8px 8px 4px 4px;
+      background:
+        linear-gradient(175deg, rgba(80,70,50,.15) 0%, transparent 40%),
+        radial-gradient(ellipse 30% 50% at 20% 30%, rgba(0,0,0,.2) 0%, transparent 60%),
+        radial-gradient(ellipse 20% 30% at 75% 60%, rgba(0,0,0,.25) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Screen bezel */
+    .tv-screen-bezel {
+      position: absolute;
+      top: 8%; left: 7%; right: 28%; bottom: 18%;
+      background: #0a0a0a;
+      border-radius: 6px;
+      box-shadow:
+        inset 0 0 12px rgba(0,0,0,.9),
+        inset 2px 2px 6px rgba(0,0,0,.8);
+      overflow: hidden;
+    }
+
+    /* The actual screen surface */
+    .tv-screen {
+      position: absolute; inset: 0;
+      background: #050505;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    /* Static noise overlay */
+    .tv-static {
+      position: absolute; inset: 0;
+      opacity: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+      mix-blend-mode: screen;
+    }
+
+    /* Figure shown on screen */
+    .tv-figure {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      opacity: 0;
+      filter: grayscale(1) contrast(2) brightness(.6);
+    }
+
+    /* Scan lines over screen */
+    .tv-scanlines {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,.3) 2px, rgba(0,0,0,.3) 4px
+      );
+      pointer-events: none;
+      border-radius: 5px;
+    }
+
+    /* Glass crack — upper right of screen */
+    .tv-crack {
+      position: absolute;
+      top: 0; right: 0;
+      width: 45%; height: 45%;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M85 5 Q70 20 75 35 Q80 45 65 55 Q55 62 60 75' stroke='rgba(255,255,255,0.55)' stroke-width='1.2' fill='none'/%3E%3Cpath d='M75 35 Q85 38 92 45' stroke='rgba(255,255,255,0.4)' stroke-width='0.8' fill='none'/%3E%3Cpath d='M65 55 Q55 50 48 58' stroke='rgba(255,255,255,0.35)' stroke-width='0.7' fill='none'/%3E%3Cpath d='M85 5 Q90 12 95 8' stroke='rgba(255,255,255,0.3)' stroke-width='0.6' fill='none'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Electricity crackle */
+    .tv-electric {
+      position: absolute; inset: -4px;
+      border-radius: 8px;
+      opacity: 0;
+      box-shadow:
+        0 0 8px 2px rgba(120,180,255,.9),
+        0 0 20px 4px rgba(80,140,255,.5),
+        inset 0 0 8px rgba(120,180,255,.3);
+    }
+
+    /* Control knobs on right side */
+    .tv-controls {
+      position: absolute;
+      top: 12%; right: 4%; bottom: 15%;
+      width: 18%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .tv-knob {
+      width: 45%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #5a5248, #2a2420);
+      box-shadow: inset 1px 1px 3px rgba(255,255,255,.15), inset -1px -1px 3px rgba(0,0,0,.5);
+    }
+    .tv-knob-line {
+      width: 60%;
+      height: 2px;
+      background: #4a4440;
+      border-radius: 1px;
+    }
+
+    /* TV stand / legs */
+    .tv-legs {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 15%;
+      height: 8px;
+    }
+    .tv-leg {
+      width: 12%;
+      height: 100%;
+      background: linear-gradient(180deg, #2a2520, #1a1510);
+      border-radius: 0 0 3px 3px;
+    }
+
+    /* Antenna */
+    .tv-antenna-wrap {
+      position: absolute;
+      top: -22%; left: 20%; right: 20%;
+      display: flex;
+      justify-content: space-around;
+      height: 22%;
+    }
+    .tv-antenna {
+      width: 2px;
+      height: 100%;
+      background: #3a3530;
+      transform-origin: bottom center;
+    }
+    .tv-antenna:first-child { transform: rotate(-20deg); }
+    .tv-antenna:last-child  { transform: rotate(20deg); }
+
+    /* Glow when on */
+    .tv-glow {
+      position: absolute; inset: -8px;
+      border-radius: 12px;
+      opacity: 0;
+      background: radial-gradient(ellipse at 50% 50%,
+        rgba(100,160,100,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ON state classes — toggled by JS */
+    .tv-wrap.crackling .tv-electric { animation: elec-flash .15s ease-in-out 4; }
+    .tv-wrap.crackling .tv-static   { animation: static-show .6s ease-in-out; }
+    .tv-wrap.showing   .tv-figure   { animation: figure-show 1.8s ease-in-out; }
+    .tv-wrap.showing   .tv-glow     { animation: glow-show 1.8s ease-in-out; }
+    .tv-wrap.showing   .tv-screen   { animation: screen-on 1.8s ease-in-out; }
+
+    @keyframes elec-flash {
+      0%,100%{ opacity:0; }
+      50%    { opacity:1; }
+    }
+    @keyframes static-show {
+      0%  { opacity:0; }
+      20% { opacity:.8; }
+      60% { opacity:.6; }
+      100%{ opacity:0; }
+    }
+    @keyframes figure-show {
+      0%  { opacity:0; }
+      15% { opacity:0; }
+      25% { opacity:.9; }
+      75% { opacity:.85; }
+      90% { opacity:.4; }
+      100%{ opacity:0; }
+    }
+    @keyframes glow-show {
+      0%,100%{ opacity:0; }
+      30%,70%{ opacity:1; }
+    }
+    @keyframes screen-on {
+      0%  { background:#050505; }
+      20% { background:#181818; }
+      30% { background:#0e1a0e; }
+      75% { background:#0a140a; }
+      100%{ background:#050505; }
+    }
+
     @media(max-width:480px){
+      .tv-wrap { width: 90px; right: 1%; }
+    }
+
+        @media(max-width:480px){
       .haunted-house{width:190px;}.dead-trees{width:130px;}
     }
   </style>
@@ -942,6 +1152,52 @@
 </div><!-- end page -->
 
 <div id="char-layer"></div>
+
+<!-- ═══ CREEPY OLD TV ═══ -->
+<div class="tv-wrap" id="spooky-tv">
+  <div style="position:relative;">
+    <!-- Antennas -->
+    <div class="tv-antenna-wrap">
+      <div class="tv-antenna"></div>
+      <div class="tv-antenna"></div>
+    </div>
+
+    <!-- Main body -->
+    <div class="tv-body">
+
+      <!-- Electricity crackle ring -->
+      <div class="tv-electric"></div>
+      <!-- Glow when showing -->
+      <div class="tv-glow"></div>
+
+      <!-- Screen bezel -->
+      <div class="tv-screen-bezel">
+        <div class="tv-screen" id="tv-screen">
+          <div class="tv-static"></div>
+          <div class="tv-figure" id="tv-figure">👁️</div>
+          <div class="tv-scanlines"></div>
+          <div class="tv-crack"></div>
+        </div>
+      </div>
+
+      <!-- Right side controls -->
+      <div class="tv-controls">
+        <div class="tv-knob"></div>
+        <div class="tv-knob-line"></div>
+        <div class="tv-knob"></div>
+        <div class="tv-knob-line"></div>
+        <div class="tv-knob"></div>
+      </div>
+
+    </div><!-- end tv-body -->
+
+    <!-- Legs -->
+    <div class="tv-legs">
+      <div class="tv-leg"></div>
+      <div class="tv-leg"></div>
+    </div>
+  </div>
+</div>
 
 <footer class="site-footer">
   HELLOWEEN RADIO &nbsp;·&nbsp;
@@ -1220,6 +1476,170 @@ function scheduleChar(){
 }
 setTimeout(scheduleChar,1500);
 setTimeout(spawnChar,800);
+
+/* ══════════════════════════════════════════════════════
+   SPOOKY TV — plays 5-second clips from 15 public domain
+   horror films hosted on archive.org.
+   Uses HTML5 media fragments (#t=start,end) to play
+   specific timestamps without downloading full films.
+   All films are 100% public domain.
+   ══════════════════════════════════════════════════════ */
+const TV_CLIPS = [
+  {
+    title: "Night of the Living Dead (1968)",
+    // Opening cemetery scene — zombie first appears
+    src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=78,83"
+  },
+  {
+    title: "Night of the Living Dead (1968)",
+    // Zombies surrounding the farmhouse
+    src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=1820,1825"
+  },
+  {
+    title: "Nosferatu (1922)",
+    // Count Orlok rising from coffin
+    src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=2460,2465"
+  },
+  {
+    title: "Nosferatu (1922)",
+    // Orlok's shadow on the stairs
+    src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=4200,4205"
+  },
+  {
+    title: "Cabinet of Dr. Caligari (1920)",
+    // Cesare creeping through shadows
+    src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari.mp4#t=2700,2705"
+  },
+  {
+    title: "White Zombie (1932)",
+    // Bela Lugosi's hypnotic stare
+    src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=480,485"
+  },
+  {
+    title: "White Zombie (1932)",
+    // Zombie workers marching
+    src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=1200,1205"
+  },
+  {
+    title: "Phantom of the Opera (1925)",
+    // The unmasking scene
+    src: "https://archive.org/download/ThePhantomOfTheOpera1925/The%20Phantom%20of%20the%20Opera%20%281925%29.mp4#t=4140,4145"
+  },
+  {
+    title: "The Golem (1920)",
+    // Golem awakening
+    src: "https://archive.org/download/TheGolem1920/The%20Golem%20%281920%29.mp4#t=1560,1565"
+  },
+  {
+    title: "Spooks Run Wild (1941)",
+    // Bela Lugosi menacing
+    src: "https://archive.org/download/SpooksRunWild/SpooksRunWild.mp4#t=600,605"
+  },
+  {
+    title: "The Terror (1963)",
+    // Gothic castle scene
+    src: "https://archive.org/download/TheTerror/TheTerror.mp4#t=720,725"
+  },
+  {
+    title: "Dementia 13 (1963)",
+    // Graveyard scene
+    src: "https://archive.org/download/Dementia13/Dementia13.mp4#t=1080,1085"
+  },
+  {
+    title: "The Little Shop of Horrors (1960)",
+    // Plant attack
+    src: "https://archive.org/download/TheLittleShopOfHorrors_201/The%20Little%20Shop%20of%20Horrors.mp4#t=2400,2405"
+  },
+  {
+    title: "Carnival of Souls (1962)",
+    // Ghoul faces emerging
+    src: "https://archive.org/download/CarnivalOfSouls/CarnivalOfSouls.mp4#t=3120,3125"
+  },
+  {
+    title: "Plan 9 from Outer Space (1957)",
+    // Zombies rising from graves
+    src: "https://archive.org/download/PlanNineFromOuterSpace/PlanNineFromOuterSpace.mp4#t=1440,1445"
+  }
+];
+
+const tvWrap   = document.getElementById('spooky-tv');
+const tvFig    = document.getElementById('tv-figure');
+const tvScreen = document.getElementById('tv-screen');
+let clipIndex  = 0;
+let tvVideo    = null;
+
+function createVideoElement(src) {
+  const v = document.createElement('video');
+  v.style.cssText = `
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;border-radius:5px;
+    filter:grayscale(0.6) contrast(1.1) brightness(0.75);
+    opacity:0;transition:opacity .3s;
+  `;
+  v.muted    = true;
+  v.preload  = 'auto';
+  v.playsInline = true;
+  v.src      = src;
+  return v;
+}
+
+function triggerTV() {
+  // Pick next clip in sequence (shuffle through all 15)
+  const clip = TV_CLIPS[clipIndex % TV_CLIPS.length];
+  clipIndex++;
+
+  // Phase 1 — electricity crackle
+  tvWrap.classList.add('crackling');
+
+  setTimeout(() => {
+    tvWrap.classList.remove('crackling');
+
+    // Phase 2 — static burst
+    tvWrap.classList.add('showing');
+    tvFig.style.opacity = '0'; // hide emoji
+
+    // Remove old video if exists
+    if (tvVideo) { tvVideo.remove(); tvVideo = null; }
+
+    // Create and inject video element
+    tvVideo = createVideoElement(clip.src);
+    tvScreen.insertBefore(tvVideo, tvScreen.firstChild);
+
+    tvVideo.play().then(() => {
+      // Fade in
+      tvVideo.style.opacity = '1';
+
+      // Stop and fade out after 5 seconds
+      setTimeout(() => {
+        tvVideo.style.opacity = '0';
+        setTimeout(() => {
+          tvWrap.classList.remove('showing');
+          if (tvVideo) { tvVideo.pause(); tvVideo.remove(); tvVideo = null; }
+        }, 400);
+      }, 5000);
+
+    }).catch(() => {
+      // If video fails to load (network etc.) fall back to emoji
+      tvWrap.classList.remove('showing');
+      const fallbackEmoji = ['👁️','🧛','💀','👻','🧟','🧙'];
+      tvFig.textContent = fallbackEmoji[Math.floor(Math.random()*fallbackEmoji.length)];
+      tvFig.style.opacity = '1';
+      tvWrap.classList.add('showing');
+      setTimeout(() => {
+        tvFig.style.opacity = '0';
+        setTimeout(() => { tvWrap.classList.remove('showing'); }, 400);
+      }, 3000);
+    });
+
+  }, 700);
+}
+
+// Fire every ~15 seconds with slight randomness
+function scheduleTVEvent() {
+  triggerTV();
+  setTimeout(scheduleTVEvent, 13000 + Math.random() * 6000);
+}
+setTimeout(scheduleTVEvent, 5000 + Math.random() * 5000);
 </script>
 </body>
 </html>
