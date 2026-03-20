@@ -16,15 +16,15 @@
       --sepia:     #9a8870;
       --border:    #2a1f0e;
 
-      /* Tombstone palette */
-      --stone:        #c8c4bc;   /* main stone face */
-      --stone-dark:   #a09890;   /* shadow / edge */
-      --stone-light:  #dedad4;   /* highlight face */
-      --stone-moss:   #7a8a6a;   /* moss tint */
-      --stone-crack:  #8a8480;   /* crack lines */
-      --stone-txt:    #2e2a26;   /* engraved text — very dark on light stone */
-      --stone-txt2:   #4a4440;   /* secondary engraved text */
-      --stone-sub:    #5a5652;   /* muted engraved text */
+      /* Tombstone palette — aged, weathered, 100 years of rain */
+      --stone:        #9e9c96;   /* weathered mid grey */
+      --stone-dark:   #6e6c68;   /* deep shadow recesses */
+      --stone-light:  #bab8b2;   /* worn highlight — not bright */
+      --stone-moss:   #5a6e48;   /* heavy moss green */
+      --stone-crack:  #5a5854;   /* deep crack lines */
+      --stone-txt:    #1e1c1a;   /* deeply engraved text */
+      --stone-txt2:   #2e2c2a;   /* secondary engraved */
+      --stone-sub:    #3e3c38;   /* muted engraved */
 
       --font-title:   'Henny Penny', cursive;
       --font-stone:   'Cinzel Decorative', serif;   /* tombstone engravings */
@@ -47,24 +47,28 @@
     /* ── SCENE — full cinematic graveyard ── */
     .scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
 
-    /* Cold blue-grey stormy sky like the reference photo */
+    /* Lighter moonlit sky — graveyard scene more visible */
     .scene-sky {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 70% 40% at 50% 0%, #2a3040 0%, #161820 40%, #0a0b0e 100%);
+        radial-gradient(ellipse 80% 50% at 50% 0%, #3a4560 0%, #242838 45%, #141820 100%);
     }
 
-    /* Moon — cold white, slightly overcast */
+    /* Moon — brighter, casting more light on scene */
     .moon {
-      position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
-      width: 90px; height: 90px; border-radius: 50%;
-      background: radial-gradient(circle at 42% 42%, #f0f0ec, #d8d8d0 55%, #b0b0a8);
-      box-shadow: 0 0 50px rgba(220,220,210,.35), 0 0 120px rgba(220,220,210,.12);
+      position: absolute; top: 6%; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 100px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #ffffff, #e8e8e0 50%, #c8c8c0);
+      box-shadow:
+        0 0 60px rgba(230,230,220,.6),
+        0 0 150px rgba(230,230,220,.25),
+        0 0 300px rgba(200,210,230,.1);
       animation: moon-glow 8s ease-in-out infinite;
-      opacity: .75;
+      opacity: .9;
     }
     @keyframes moon-glow {
-      0%,100%{opacity:.75;} 50%{opacity:.9;}
+      0%,100%{opacity:.9;box-shadow:0 0 60px rgba(230,230,220,.6),0 0 150px rgba(230,230,220,.25);}
+      50%{opacity:1;box-shadow:0 0 80px rgba(230,230,220,.8),0 0 200px rgba(230,230,220,.35);}
     }
 
     /* Stars — cool white */
@@ -94,41 +98,46 @@
     .cloud:nth-child(3){animation-duration:90s;animation-delay:-45s; top:1%;font-size:6rem;}
     @keyframes drift{from{transform:translateX(-20vw);}to{transform:translateX(120vw);}}
 
-    /* Gothic church / building — centre background */
+    /* Gothic church / building — more visible */
     .church {
       position: absolute;
       bottom: 18%;
       left: 50%; transform: translateX(-50%);
       width: min(340px, 45vw);
-      opacity: .55;
+      opacity: .8;
       pointer-events: none;
+      filter: brightness(1.4);
     }
 
-    /* Gnarled trees arching from sides */
+    /* Gnarled trees — more visible */
     .tree-left {
       position: absolute; top: 0; left: 0;
       width: min(320px, 42vw); height: 55%;
-      opacity: .7; pointer-events: none;
+      opacity: .85; pointer-events: none;
+      filter: brightness(1.3);
     }
     .tree-right {
       position: absolute; top: 0; right: 0;
       width: min(300px, 40vw); height: 55%;
-      opacity: .65; pointer-events: none;
+      opacity: .8; pointer-events: none;
+      filter: brightness(1.3);
     }
 
-    /* Background gravestones */
+    /* Background gravestones — more visible */
     .bg-stones {
       position: absolute; bottom: 12%; left: 0; right: 0;
       height: 35%; pointer-events: none;
+      filter: brightness(2.2) contrast(1.2);
+      opacity: .9;
     }
 
-    /* Raven on pedestal — foreground left */
+    /* Raven on pedestal — more visible */
     .raven-wrap {
       position: absolute;
       bottom: 14%; left: 6%;
       font-size: clamp(2.5rem, 5vw, 4rem);
-      opacity: .7;
-      filter: grayscale(1) brightness(.4) contrast(1.5);
+      opacity: .85;
+      filter: grayscale(1) brightness(.55) contrast(1.4);
       animation: raven-bob 4s ease-in-out infinite;
       pointer-events: none;
       z-index: 1;
@@ -138,11 +147,11 @@
       50%{transform:translateY(-6px) rotate(3deg);}
     }
 
-    /* Ground — dark grass / leaf texture */
+    /* Ground — slightly lighter, more visible */
     .ground {
       position: absolute; bottom: 0; left: 0; right: 0; height: 20%;
       background: linear-gradient(to top,
-        #070809 0%, #0c0e10 40%, #111418 70%, transparent 100%);
+        #0e1014 0%, #141820 40%, #1a2028 65%, transparent 100%);
     }
 
     /* Fallen leaves scattered */
@@ -161,24 +170,26 @@
         radial-gradient(2px 2px at 95% 80%, #4a3820 0%,transparent 100%);
     }
 
-    /* Ground spotlight — illuminates tombstone from below like the photo */
+    /* Ground spotlight — stronger, illuminates tombstone dramatically */
     .ground-light {
       position: absolute;
       bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 60%; height: 50%;
-      background: radial-gradient(ellipse 50% 40% at 50% 100%,
-        rgba(200,190,160,.08) 0%, transparent 70%);
+      width: 70%; height: 60%;
+      background: radial-gradient(ellipse 55% 45% at 50% 100%,
+        rgba(200,210,230,.14) 0%,
+        rgba(180,190,210,.06) 40%,
+        transparent 70%);
       pointer-events: none;
       z-index: 1;
     }
 
-    /* Heavy ground fog */
+    /* Ground fog — lighter so graveyard shows through */
     .fog {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 22%;
+      position: absolute; bottom: 0; left: 0; right: 0; height: 18%;
       background: linear-gradient(to top,
-        rgba(16,18,22,.98) 0%,
-        rgba(20,22,28,.7)  35%,
-        rgba(20,22,28,.25) 65%,
+        rgba(16,18,26,.88) 0%,
+        rgba(20,24,32,.5)  40%,
+        rgba(20,24,32,.15) 70%,
         transparent 100%);
     }
 
@@ -277,50 +288,52 @@
       align-items: center;
     }
 
-    /* Shoulder ledges — rectangular ears on each side */
+    /* Shoulder ledges — thin ears at sides only */
     .stone-shoulders {
       position: relative;
-      width: 112%;
-      left: -6%;
-      height: 22px;
+      width: 116%;
+      left: -8%;
+      height: 18px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       z-index: 2;
       margin-bottom: -2px;
+      pointer-events: none;
     }
     .stone-shoulder {
-      width: 8%;
+      width: 7%;
       height: 100%;
-      background: linear-gradient(160deg, var(--stone-light), var(--stone-dark));
+      background: linear-gradient(160deg, #aeaca6, #686664);
       border-radius: 2px 2px 0 0;
       box-shadow:
-        inset 1px 0 3px rgba(255,255,255,.3),
-        inset -1px 0 3px rgba(0,0,0,.3);
+        inset 1px 0 3px rgba(255,255,255,.15),
+        inset -1px 0 3px rgba(0,0,0,.5);
     }
 
-    /* Main stone body */
+    /* Main stone body — aged and weathered */
     .tombstone {
       position: relative;
       width: 100%;
-      min-height: calc(72vh - 100px);
+      height: calc(75vh - 100px);
+      max-height: calc(75vh - 100px);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      /* Cool grey stone — matches reference photo */
-      background: linear-gradient(170deg,
-        #dedad4 0%,
-        #c8c4bc 35%,
-        #b8b4ac 70%,
-        #a8a49c 100%);
-      /* Outer arch — big radius top */
+      /* Aged stone — uneven, mottled, darker in recesses */
+      background:
+        radial-gradient(ellipse 60% 40% at 30% 20%, rgba(180,178,170,.4) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 75% 60%, rgba(80,78,72,.3) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 50% at 50% 80%, rgba(60,70,45,.25) 0%, transparent 60%),
+        linear-gradient(175deg, #aeaca6 0%, #969490 25%, #868480 55%, #767472 80%, #686664 100%);
       border-radius: 50% 50% 3% 3% / 16% 16% 1% 1%;
       padding: 0 0 1.2rem;
       overflow: visible;
-      /* Raised border bevel — light top-left, dark bottom-right */
       box-shadow:
-        inset 4px 4px 10px rgba(255,255,255,.5),
-        inset -4px -4px 10px rgba(0,0,0,.3),
-        inset 0 0 0 10px rgba(0,0,0,.06);
+        inset 5px 5px 14px rgba(255,255,255,.22),
+        inset -5px -5px 14px rgba(0,0,0,.45),
+        inset 0 0 0 8px rgba(0,0,0,.1),
+        0 0 40px rgba(0,0,0,.6);
     }
 
     /* Inner arch — recessed, creating the double-arch effect */
@@ -341,21 +354,33 @@
       z-index: 1;
     }
 
-    /* Crack running down right side — like reference photo */
+    /* Deep cracks — multiple, jagged, aged */
     .stone-crack {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M72%25 8%25 Q74%25 18%25 70%25 30%25 Q68%25 42%25 73%25 55%25 Q75%25 65%25 71%25 75%25' stroke='%23706c68' stroke-width='1.2' fill='none' opacity='0.55'/%3E%3Cpath d='M73%25 30%25 Q76%25 35%25 78%25 38%25' stroke='%23706c68' stroke-width='0.7' fill='none' opacity='0.4'/%3E%3Cpath d='M25%25 45%25 Q27%25 52%25 24%25 60%25' stroke='%23706c68' stroke-width='0.8' fill='none' opacity='0.35'/%3E%3C/svg%3E");
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M70%25 5%25 Q73%25 15%25 68%25 28%25 Q65%25 40%25 71%25 52%25 Q74%25 62%25 69%25 74%25 Q66%25 82%25 70%25 92%25' stroke='%23484644' stroke-width='1.4' fill='none' opacity='0.65'/%3E%3Cpath d='M71%25 28%25 Q75%25 33%25 79%25 37%25 Q82%25 40%25 80%25 45%25' stroke='%23484644' stroke-width='0.8' fill='none' opacity='0.5'/%3E%3Cpath d='M22%25 40%25 Q24%25 50%25 20%25 62%25 Q18%25 70%25 22%25 78%25' stroke='%23484644' stroke-width='1.0' fill='none' opacity='0.5'/%3E%3Cpath d='M20%25 55%25 Q16%25 60%25 14%25 65%25' stroke='%23484644' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M45%25 15%25 Q47%25 22%25 44%25 30%25' stroke='%23484644' stroke-width='0.7' fill='none' opacity='0.35'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 2;
     }
 
-    /* Moss at base */
+    /* Heavy moss — creeps up sides and pools at base */
     .stone-moss {
       position: absolute;
-      bottom: 0; left: 0; right: 0; height: 30px;
-      background: linear-gradient(to top,
-        rgba(70,90,50,.2) 0%, rgba(70,90,50,.06) 60%, transparent 100%);
+      bottom: 0; left: 0; right: 0; height: 45%;
+      background:
+        radial-gradient(ellipse 80% 25% at 50% 100%, rgba(55,75,35,.55) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 15% at 20% 100%, rgba(50,70,32,.4) 0%, transparent 70%),
+        radial-gradient(ellipse 35% 12% at 80% 100%, rgba(55,72,35,.4) 0%, transparent 70%),
+        radial-gradient(ellipse 25% 8%  at 10% 95%,  rgba(45,65,28,.3) 0%, transparent 70%),
+        linear-gradient(to top, rgba(50,68,32,.35) 0%, rgba(50,68,32,.08) 40%, transparent 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* Water stain streaks running down the stone */
+    .stone-stains {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M30%25 0%25 Q31%25 20%25 29%25 45%25 Q28%25 60%25 30%25 80%25' stroke='%23505550' stroke-width='2' fill='none' opacity='0.12'/%3E%3Cpath d='M55%25 0%25 Q56%25 25%25 54%25 50%25 Q53%25 68%25 55%25 85%25' stroke='%23505550' stroke-width='3' fill='none' opacity='0.10'/%3E%3Cpath d='M78%25 5%25 Q79%25 22%25 77%25 48%25 Q76%25 62%25 78%25 78%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.10'/%3E%3Cpath d='M15%25 8%25 Q16%25 28%25 14%25 52%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 2;
     }
@@ -373,9 +398,9 @@
     .stone-foot {
       width: 30%;
       height: 100%;
-      background: linear-gradient(180deg, var(--stone) 0%, var(--stone-dark) 100%);
-      border-radius: 0 0 3px 3px;
-      box-shadow: inset 0 -2px 4px rgba(0,0,0,.3);
+      background: linear-gradient(180deg, #868480 0%, #585654 100%);
+      border-radius: 0 0 4px 4px;
+      box-shadow: inset 0 -3px 6px rgba(0,0,0,.5);
     }
 
     /* ── TOP PLAYER WIDGET ── */
@@ -497,11 +522,11 @@
     /* ── ARTIST ── */
     .stone-artist {
       font-family: var(--font-stone2);
-      font-size: clamp(.88rem, 2.2vh, 1.35rem);
+      font-size: clamp(.75rem, 2vh, 1.15rem);
       font-weight: 600;
       color: var(--stone-txt2);
       text-align: center;
-      padding: .15rem 1rem .1rem;
+      padding: .1rem 1rem .05rem;
       letter-spacing: .06em;
       text-shadow: 1px 1px 0 rgba(255,255,255,.45), -1px -1px 0 rgba(0,0,0,.2);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -830,6 +855,8 @@
         <div class="stone-inner-arch"></div>
         <!-- Crack overlay -->
         <div class="stone-crack"></div>
+        <!-- Water stain streaks -->
+        <div class="stone-stains"></div>
         <!-- Moss at base -->
         <div class="stone-moss"></div>
 
