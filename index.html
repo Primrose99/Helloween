@@ -16,20 +16,19 @@
       --sepia:     #9a8870;
       --border:    #2a1f0e;
 
-      /* Tombstone palette — aged, weathered, 100 years of rain */
-      --stone:        #9e9c96;   /* weathered mid grey */
-      --stone-dark:   #6e6c68;   /* deep shadow recesses */
-      --stone-light:  #bab8b2;   /* worn highlight — not bright */
-      --stone-moss:   #5a6e48;   /* heavy moss green */
-      --stone-crack:  #5a5854;   /* deep crack lines */
-      --stone-txt:    #1e1c1a;   /* deeply engraved text */
-      --stone-txt2:   #2e2c2a;   /* secondary engraved */
-      --stone-sub:    #3e3c38;   /* muted engraved */
+      --stone:        #9e9c96;
+      --stone-dark:   #6e6c68;
+      --stone-light:  #bab8b2;
+      --stone-moss:   #5a6e48;
+      --stone-crack:  #5a5854;
+      --stone-txt:    #1e1c1a;
+      --stone-txt2:   #2e2c2a;
+      --stone-sub:    #3e3c38;
 
       --font-title:   'Henny Penny', cursive;
-      --font-stone:   'Cinzel Decorative', serif;   /* tombstone engravings */
-      --font-stone2:  'Cinzel', serif;              /* smaller stone text */
-      --font-sub:     'Creepster', cursive;          /* subtitle under title */
+      --font-stone:   'Cinzel Decorative', serif;
+      --font-stone2:  'Cinzel', serif;
+      --font-sub:     'Creepster', cursive;
       --font-mono:    'Share Tech Mono', monospace;
     }
 
@@ -44,25 +43,18 @@
       overflow-x: hidden;
     }
 
-    /* ── SCENE — full cinematic graveyard ── */
     .scene { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
 
-    /* Lighter moonlit sky — graveyard scene more visible */
     .scene-sky {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% 0%, #3a4560 0%, #242838 45%, #141820 100%);
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, #3a4560 0%, #242838 45%, #141820 100%);
     }
 
-    /* Moon — brighter, casting more light on scene */
     .moon {
       position: absolute; top: 6%; left: 50%; transform: translateX(-50%);
       width: 100px; height: 100px; border-radius: 50%;
       background: radial-gradient(circle at 40% 40%, #ffffff, #e8e8e0 50%, #c8c8c0);
-      box-shadow:
-        0 0 60px rgba(230,230,220,.6),
-        0 0 150px rgba(230,230,220,.25),
-        0 0 300px rgba(200,210,230,.1);
+      box-shadow: 0 0 60px rgba(230,230,220,.6), 0 0 150px rgba(230,230,220,.25), 0 0 300px rgba(200,210,230,.1);
       animation: moon-glow 8s ease-in-out infinite;
       opacity: .9;
     }
@@ -71,7 +63,6 @@
       50%{opacity:1;box-shadow:0 0 80px rgba(230,230,220,.8),0 0 200px rgba(230,230,220,.35);}
     }
 
-    /* Stars — cool white */
     .stars {
       position: absolute; inset: 0;
       background-image:
@@ -87,7 +78,6 @@
         radial-gradient(1px 1px at 55% 20%, rgba(220,230,255,.4) 0%,transparent 100%);
     }
 
-    /* Wispy clouds drifting */
     .cloud {
       position: absolute; font-size: 5rem;
       opacity: .08; animation: drift linear infinite; filter: blur(4px);
@@ -98,66 +88,47 @@
     .cloud:nth-child(3){animation-duration:90s;animation-delay:-45s; top:1%;font-size:6rem;}
     @keyframes drift{from{transform:translateX(-20vw);}to{transform:translateX(120vw);}}
 
-    /* Gothic church / building — more visible */
     .church {
-      position: absolute;
-      bottom: 18%;
-      left: 50%; transform: translateX(-50%);
-      width: min(340px, 45vw);
-      opacity: .8;
-      pointer-events: none;
-      filter: brightness(1.4);
+      position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
+      width: min(340px, 45vw); opacity: .8; pointer-events: none; filter: brightness(1.4);
     }
 
-    /* Gnarled trees — more visible */
     .tree-left {
       position: absolute; top: 0; left: 0;
       width: min(320px, 42vw); height: 55%;
-      opacity: .85; pointer-events: none;
-      filter: brightness(1.3);
+      opacity: .85; pointer-events: none; filter: brightness(1.3);
     }
     .tree-right {
       position: absolute; top: 0; right: 0;
       width: min(300px, 40vw); height: 55%;
-      opacity: .8; pointer-events: none;
-      filter: brightness(1.3);
+      opacity: .8; pointer-events: none; filter: brightness(1.3);
     }
 
-    /* Background gravestones — more visible */
     .bg-stones {
       position: absolute; bottom: 12%; left: 0; right: 0;
       height: 35%; pointer-events: none;
-      filter: brightness(2.2) contrast(1.2);
-      opacity: .9;
+      filter: brightness(2.2) contrast(1.2); opacity: .9;
     }
 
-    /* Raven on pedestal — more visible */
     .raven-wrap {
-      position: absolute;
-      bottom: 14%; left: 6%;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      opacity: .85;
+      position: absolute; bottom: 14%; left: 6%;
+      font-size: clamp(2.5rem, 5vw, 4rem); opacity: .85;
       filter: grayscale(1) brightness(.55) contrast(1.4);
       animation: raven-bob 4s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 1;
+      pointer-events: none; z-index: 1;
     }
     @keyframes raven-bob {
       0%,100%{transform:translateY(0) rotate(-3deg);}
       50%{transform:translateY(-6px) rotate(3deg);}
     }
 
-    /* Ground — slightly lighter, more visible */
     .ground {
       position: absolute; bottom: 0; left: 0; right: 0; height: 20%;
-      background: linear-gradient(to top,
-        #0e1014 0%, #141820 40%, #1a2028 65%, transparent 100%);
+      background: linear-gradient(to top, #0e1014 0%, #141820 40%, #1a2028 65%, transparent 100%);
     }
 
-    /* Fallen leaves scattered */
     .leaves {
-      position: absolute; bottom: 10%; left: 0; right: 0; height: 12%;
-      opacity: .25;
+      position: absolute; bottom: 10%; left: 0; right: 0; height: 12%; opacity: .25;
       background-image:
         radial-gradient(2px 2px at 5%  80%, #4a3820 0%,transparent 100%),
         radial-gradient(3px 2px at 12% 60%, #3a2c18 0%,transparent 100%),
@@ -170,41 +141,26 @@
         radial-gradient(2px 2px at 95% 80%, #4a3820 0%,transparent 100%);
     }
 
-    /* Ground spotlight — stronger, illuminates tombstone dramatically */
     .ground-light {
-      position: absolute;
-      bottom: 0; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
       width: 70%; height: 60%;
-      background: radial-gradient(ellipse 55% 45% at 50% 100%,
-        rgba(200,210,230,.14) 0%,
-        rgba(180,190,210,.06) 40%,
-        transparent 70%);
-      pointer-events: none;
-      z-index: 1;
+      background: radial-gradient(ellipse 55% 45% at 50% 100%, rgba(200,210,230,.14) 0%, rgba(180,190,210,.06) 40%, transparent 70%);
+      pointer-events: none; z-index: 1;
     }
 
-    /* Ground fog — lighter so graveyard shows through */
     .fog {
       position: absolute; bottom: 0; left: 0; right: 0; height: 18%;
-      background: linear-gradient(to top,
-        rgba(16,18,26,.88) 0%,
-        rgba(20,24,32,.5)  40%,
-        rgba(20,24,32,.15) 70%,
-        transparent 100%);
+      background: linear-gradient(to top, rgba(16,18,26,.88) 0%, rgba(20,24,32,.5) 40%, rgba(20,24,32,.15) 70%, transparent 100%);
     }
 
-    /* Fog wisps */
     .fog-wisp {
       position: absolute; bottom: 8%; height: 6%;
-      background: rgba(160,170,190,.04);
-      border-radius: 50%;
-      filter: blur(20px);
-      animation: wisp linear infinite;
+      background: rgba(160,170,190,.04); border-radius: 50%;
+      filter: blur(20px); animation: wisp linear infinite;
     }
     @keyframes wisp {
       from{transform:translateX(-30%);opacity:0;}
-      10%{opacity:1;}
-      90%{opacity:1;}
+      10%{opacity:1;} 90%{opacity:1;}
       to{transform:translateX(130vw);opacity:0;}
     }
 
@@ -213,7 +169,6 @@
     .win-flicker3{animation:wf 2.6s ease-in-out infinite .4s;}
     @keyframes wf{0%,100%{opacity:.9;}20%{opacity:.25;}22%{opacity:.85;}75%{opacity:.35;}77%{opacity:.9;}}
 
-    /* ── PAGE ── */
     .page {
       position: relative; z-index: 2;
       min-height: 100vh;
@@ -221,7 +176,6 @@
       padding: 2rem 1rem 2rem;
     }
 
-    /* ── STATION HEADER ── */
     .station-header{text-align:center;margin-bottom:1.2rem;position:relative;width:100%;}
     .bat-l,.bat-r{
       position:absolute;top:3.2rem;font-size:1.9rem;
@@ -240,37 +194,19 @@
       font-family:var(--font-title);
       font-size:clamp(3.4rem,9.5vw,6.5rem);
       color:var(--amber2);line-height:1;
-      text-align:center;
-      display:block;
-      width:100%;
+      text-align:center; display:block; width:100%;
       text-shadow:0 0 14px rgba(200,120,10,.85),0 0 38px rgba(200,120,10,.3),2px 3px 0 rgba(139,26,26,.8);
     }
     .station-sub{
       font-family:'Creepster', cursive;
       font-size:clamp(1rem, 2.8vw, 1.5rem);
-      letter-spacing:.08em;
-      color:var(--sepia);
-      text-transform:none;
-      margin-top:.3rem;
-      line-height:1.2;
-      text-align:center;
-      display:block;
-      width:100%;
+      letter-spacing:.08em; color:var(--sepia);
+      text-transform:none; margin-top:.3rem; line-height:1.2;
+      text-align:center; display:block; width:100%;
     }
 
-
-
-    /* ══════════════════════════════════════════════════════
-       TOMBSTONE WIDGET — modelled on reference photo:
-       double arch, skull, shoulder ledges, base feet, crack
-       ══════════════════════════════════════════════════════ */
-
-    /* Outer wrapper */
     .tombstone-wrap {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
       width: min(380px, 50vw, calc(75vh * 0.50));
       z-index: 20;
       filter:
@@ -279,56 +215,35 @@
         drop-shadow(0 0 70px rgba(0,0,0,.95));
     }
 
-    /* The full tombstone assembly */
     .tombstone-assembly {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative; width: 100%;
+      display: flex; flex-direction: column; align-items: center;
     }
 
-    /* Shoulder ledges — thin ears at sides only */
     .stone-shoulders {
-      position: relative;
-      width: 116%;
-      left: -8%;
-      height: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      z-index: 2;
-      margin-bottom: -2px;
-      pointer-events: none;
+      position: relative; width: 116%; left: -8%; height: 18px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      z-index: 2; margin-bottom: -2px; pointer-events: none;
     }
     .stone-shoulder {
-      width: 7%;
-      height: 100%;
+      width: 7%; height: 100%;
       background: linear-gradient(160deg, #aeaca6, #686664);
       border-radius: 2px 2px 0 0;
-      box-shadow:
-        inset 1px 0 3px rgba(255,255,255,.15),
-        inset -1px 0 3px rgba(0,0,0,.5);
+      box-shadow: inset 1px 0 3px rgba(255,255,255,.15), inset -1px 0 3px rgba(0,0,0,.5);
     }
 
-    /* Main stone body — aged and weathered */
     .tombstone {
-      position: relative;
-      width: 100%;
-      height: calc(75vh - 100px);
-      max-height: calc(75vh - 100px);
+      position: relative; width: 100%;
+      height: calc(75vh - 100px); max-height: calc(75vh - 100px);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      /* Aged stone — uneven, mottled, darker in recesses */
+      display: flex; flex-direction: column;
       background:
         radial-gradient(ellipse 60% 40% at 30% 20%, rgba(180,178,170,.4) 0%, transparent 60%),
         radial-gradient(ellipse 40% 30% at 75% 60%, rgba(80,78,72,.3) 0%, transparent 55%),
         radial-gradient(ellipse 50% 50% at 50% 80%, rgba(60,70,45,.25) 0%, transparent 60%),
         linear-gradient(175deg, #aeaca6 0%, #969490 25%, #868480 55%, #767472 80%, #686664 100%);
       border-radius: 50% 50% 3% 3% / 16% 16% 1% 1%;
-      padding: 0 0 1.2rem;
-      overflow: visible;
+      padding: 0 0 1.2rem; overflow: visible;
       box-shadow:
         inset 5px 5px 14px rgba(255,255,255,.22),
         inset -5px -5px 14px rgba(0,0,0,.45),
@@ -336,91 +251,61 @@
         0 0 40px rgba(0,0,0,.6);
     }
 
-    /* Inner arch — recessed, creating the double-arch effect */
     .stone-inner-arch {
-      position: absolute;
-      top: 5%;
-      left: 8%;
-      right: 8%;
-      bottom: 3%;
+      position: absolute; top: 5%; left: 8%; right: 8%; bottom: 3%;
       border-radius: 50% 50% 2% 2% / 18% 18% 1% 1%;
       background: transparent;
-      /* Dark inset shadow creates depth of inner arch */
       box-shadow:
         inset 0 0 0 3px rgba(0,0,0,.2),
         inset 3px 3px 8px rgba(0,0,0,.25),
         inset -3px -3px 8px rgba(255,255,255,.15);
-      pointer-events: none;
-      z-index: 1;
+      pointer-events: none; z-index: 1;
     }
 
-    /* Deep cracks — multiple, jagged, aged */
     .stone-crack {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M70%25 5%25 Q73%25 15%25 68%25 28%25 Q65%25 40%25 71%25 52%25 Q74%25 62%25 69%25 74%25 Q66%25 82%25 70%25 92%25' stroke='%23484644' stroke-width='1.4' fill='none' opacity='0.65'/%3E%3Cpath d='M71%25 28%25 Q75%25 33%25 79%25 37%25 Q82%25 40%25 80%25 45%25' stroke='%23484644' stroke-width='0.8' fill='none' opacity='0.5'/%3E%3Cpath d='M22%25 40%25 Q24%25 50%25 20%25 62%25 Q18%25 70%25 22%25 78%25' stroke='%23484644' stroke-width='1.0' fill='none' opacity='0.5'/%3E%3Cpath d='M20%25 55%25 Q16%25 60%25 14%25 65%25' stroke='%23484644' stroke-width='0.6' fill='none' opacity='0.4'/%3E%3Cpath d='M45%25 15%25 Q47%25 22%25 44%25 30%25' stroke='%23484644' stroke-width='0.7' fill='none' opacity='0.35'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 2;
+      pointer-events: none; z-index: 2;
     }
 
-    /* Heavy moss — creeps up sides and pools at base */
     .stone-moss {
-      position: absolute;
-      bottom: 0; left: 0; right: 0; height: 45%;
+      position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
       background:
         radial-gradient(ellipse 80% 25% at 50% 100%, rgba(55,75,35,.55) 0%, transparent 70%),
         radial-gradient(ellipse 40% 15% at 20% 100%, rgba(50,70,32,.4) 0%, transparent 70%),
         radial-gradient(ellipse 35% 12% at 80% 100%, rgba(55,72,35,.4) 0%, transparent 70%),
         radial-gradient(ellipse 25% 8%  at 10% 95%,  rgba(45,65,28,.3) 0%, transparent 70%),
         linear-gradient(to top, rgba(50,68,32,.35) 0%, rgba(50,68,32,.08) 40%, transparent 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-    /* Water stain streaks running down the stone */
-    .stone-stains {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M30%25 0%25 Q31%25 20%25 29%25 45%25 Q28%25 60%25 30%25 80%25' stroke='%23505550' stroke-width='2' fill='none' opacity='0.12'/%3E%3Cpath d='M55%25 0%25 Q56%25 25%25 54%25 50%25 Q53%25 68%25 55%25 85%25' stroke='%23505550' stroke-width='3' fill='none' opacity='0.10'/%3E%3Cpath d='M78%25 5%25 Q79%25 22%25 77%25 48%25 Q76%25 62%25 78%25 78%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.10'/%3E%3Cpath d='M15%25 8%25 Q16%25 28%25 14%25 52%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 2;
+      pointer-events: none; z-index: 2;
     }
 
-    /* Base feet — two rectangular tabs at bottom corners */
+    .stone-stains {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cpath d='M30%25 0%25 Q31%25 20%25 29%25 45%25 Q28%25 60%25 30%25 80%25' stroke='%23505550' stroke-width='2' fill='none' opacity='0.12'/%3E%3Cpath d='M55%25 0%25 Q56%25 25%25 54%25 50%25 Q53%25 68%25 55%25 85%25' stroke='%23505550' stroke-width='3' fill='none' opacity='0.10'/%3E%3Cpath d='M78%25 5%25 Q79%25 22%25 77%25 48%25 Q76%25 62%25 78%25 78%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.10'/%3E%3Cpath d='M15%25 8%25 Q16%25 28%25 14%25 52%25' stroke='%23505550' stroke-width='1.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 2;
+    }
+
     .stone-feet {
-      width: 108%;
-      left: -4%;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      height: 16px;
-      margin-top: -2px;
+      width: 108%; left: -4%; position: relative;
+      display: flex; justify-content: space-between;
+      height: 16px; margin-top: -2px;
     }
     .stone-foot {
-      width: 30%;
-      height: 100%;
+      width: 30%; height: 100%;
       background: linear-gradient(180deg, #868480 0%, #585654 100%);
       border-radius: 0 0 4px 4px;
       box-shadow: inset 0 -3px 6px rgba(0,0,0,.5);
     }
 
-    /* ── TOP PLAYER WIDGET ── */
     .stone-top-player {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .7rem;
-      padding: 1rem 1rem .2rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: .7rem; padding: 1rem 1rem .2rem;
     }
     .stone-top-btn {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: #2e2a26;
-      border: 2px solid var(--stone-crack);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem;
-      color: var(--stone-light);
-      transition: all .18s;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: #2e2a26; border: 2px solid var(--stone-crack);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; color: var(--stone-light); transition: all .18s;
       box-shadow:
         inset 1px 1px 3px rgba(255,255,255,.2),
         inset -1px -1px 3px rgba(0,0,0,.4),
@@ -429,128 +314,77 @@
     }
     .stone-top-btn:hover { background: #3d3830; transform: scale(1.08); }
     .stone-top-btn:active { transform: scale(.94); }
-    .stone-top-sig {
-      display: flex; align-items: center; gap: .35rem;
-    }
+    .stone-top-sig { display: flex; align-items: center; gap: .35rem; }
     .stone-top-live {
-      font-size: .5rem;
-      color: var(--stone-crack);
+      font-size: .5rem; color: var(--stone-crack);
       animation: pdot 1.2s ease-in-out infinite;
     }
     .stone-top-live.live { color: #4caf50; }
 
-    /* ── SKULL & SCROLLWORK ── */
     .stone-skull-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: clamp(.8rem, 3vh, 2rem);
-      padding-bottom: .2rem;
-      position: relative;
-      z-index: 3;
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: clamp(.8rem, 3vh, 2rem); padding-bottom: .2rem;
+      position: relative; z-index: 3;
     }
     .stone-skull {
-      font-size: clamp(1.8rem, 5vh, 3rem);
-      line-height: 1;
+      font-size: clamp(1.8rem, 5vh, 3rem); line-height: 1;
       filter: grayscale(1) brightness(.7) contrast(1.2);
-      text-shadow: 0 2px 6px rgba(0,0,0,.4);
-      margin: .2rem 0;
+      text-shadow: 0 2px 6px rgba(0,0,0,.4); margin: .2rem 0;
     }
     .stone-scrollwork { width: 100%; }
-
-    /* Remove old stone-dirt — replaced by stone-feet */
     .stone-dirt { display: none; }
 
-    /* ── ARCH ORNAMENT — decorative cross at top ── */
     .stone-ornament {
       display: flex; justify-content: center; align-items: center;
-      padding-top: 1.4rem;
-      padding-bottom: .5rem;
-      font-size: 1.1rem;
-      color: var(--stone-crack);
-      opacity: .65;
-      letter-spacing: .3rem;
-      text-shadow: 1px 1px 0 rgba(255,255,255,.4);
+      padding-top: 1.4rem; padding-bottom: .5rem;
+      font-size: 1.1rem; color: var(--stone-crack); opacity: .65;
+      letter-spacing: .3rem; text-shadow: 1px 1px 0 rgba(255,255,255,.4);
     }
 
-    /* ── DIVIDING LINE — engraved rule ── */
     .stone-rule {
-      margin: 0 1.4rem;
-      height: 1px;
+      margin: 0 1.4rem; height: 1px;
       background: linear-gradient(90deg, transparent, var(--stone-crack), var(--stone-crack), transparent);
       opacity: .5;
     }
-    .stone-rule-double {
-      margin: 0 1.4rem .1rem;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--stone-crack), var(--stone-crack), transparent);
-      opacity: .3;
-    }
 
-    /* ── HERE LIES label ── */
     .here-lies {
-      font-family: var(--font-stone);
-      font-size: clamp(.65rem, 1.5vh, .95rem);
-      font-weight: 400;
-      letter-spacing: .32em;
-      text-transform: uppercase;
-      color: var(--stone-sub);
-      text-align: center;
+      font-family: var(--font-stone); font-size: clamp(.65rem, 1.5vh, .95rem);
+      font-weight: 400; letter-spacing: .32em; text-transform: uppercase;
+      color: var(--stone-sub); text-align: center;
       padding: clamp(.6rem,2vh,1.2rem) 1rem .3rem;
       text-shadow: 1px 1px 0 rgba(255,255,255,.5), -1px -1px 0 rgba(0,0,0,.15);
     }
 
-    /* ── SONG TITLE — the "name on the stone" ── */
     .stone-song {
-      font-family: var(--font-stone);
-      font-size: clamp(1.1rem, 3.2vh, 1.9rem);
-      font-weight: 700;
-      color: var(--stone-txt);
-      text-align: center;
-      padding: .15rem 1rem .1rem;
-      line-height: 1.2;
-      /* Engraved look: dark text with inner light edge */
+      font-family: var(--font-stone); font-size: clamp(1.1rem, 3.2vh, 1.9rem);
+      font-weight: 700; color: var(--stone-txt); text-align: center;
+      padding: .15rem 1rem .1rem; line-height: 1.2;
       text-shadow:
         1px 1px 0 rgba(255,255,255,.55),
         -1px -1px 0 rgba(0,0,0,.35),
         0 2px 4px rgba(0,0,0,.2);
-      overflow-wrap: break-word;
-      word-break: break-word;
-      white-space: normal;
+      overflow-wrap: break-word; word-break: break-word; white-space: normal;
     }
 
-    /* ── ARTIST ── */
     .stone-artist {
-      font-family: var(--font-stone2);
-      font-size: clamp(.75rem, 2vh, 1.15rem);
-      font-weight: 600;
-      color: var(--stone-txt2);
-      text-align: center;
-      padding: .1rem 1rem .05rem;
-      letter-spacing: .06em;
+      font-family: var(--font-stone2); font-size: clamp(.75rem, 2vh, 1.15rem);
+      font-weight: 600; color: var(--stone-txt2); text-align: center;
+      padding: .1rem 1rem .05rem; letter-spacing: .06em;
       text-shadow: 1px 1px 0 rgba(255,255,255,.45), -1px -1px 0 rgba(0,0,0,.2);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* ── ALBUM ── */
     .stone-album {
-      font-family: var(--font-stone2);
-      font-size: clamp(.65rem, 1.6vh, .95rem);
-      color: var(--stone-sub);
-      text-align: center;
-      padding: .1rem 1rem clamp(.5rem,1.5vh,1rem);
-      font-style: italic;
-      letter-spacing: .04em;
-      text-shadow: 1px 1px 0 rgba(255,255,255,.35);
+      font-family: var(--font-stone2); font-size: clamp(.65rem, 1.6vh, .95rem);
+      color: var(--stone-sub); text-align: center;
+      padding: .1rem 1rem clamp(.5rem,1.5vh,1rem); font-style: italic;
+      letter-spacing: .04em; text-shadow: 1px 1px 0 rgba(255,255,255,.35);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* ── MINI VISUALIZER — thin amber bars ── */
     .stone-viz {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 2px; height: 18px;
-      margin: .2rem 1rem .5rem;
-      opacity: .6;
+      gap: 2px; height: 18px; margin: .2rem 1rem .5rem; opacity: .6;
     }
     .sv-bar {
       width: 3px; border-radius: 1px 1px 0 0;
@@ -560,22 +394,16 @@
     @keyframes sv-eq{0%,100%{transform:scaleY(.08);}50%{transform:scaleY(1);}}
     .sv-bar.paused{animation-play-state:paused;transform:scaleY(.08);}
 
-    /* ── PREVIOUSLY section ── */
     .stone-prev-head {
-      font-family: var(--font-stone);
-      font-size: clamp(.55rem, 1.3vh, .82rem);
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--stone-sub);
-      text-align: center;
-      padding: .55rem 1rem .25rem;
+      font-family: var(--font-stone); font-size: clamp(.55rem, 1.3vh, .82rem);
+      letter-spacing: .28em; text-transform: uppercase; color: var(--stone-sub);
+      text-align: center; padding: .55rem 1rem .25rem;
       text-shadow: 1px 1px 0 rgba(255,255,255,.4);
     }
 
     .stone-prev-item {
       display: flex; align-items: baseline; gap: .5rem;
-      padding: .28rem 1.2rem;
-      border-top: 1px solid rgba(138,132,128,.25);
+      padding: .28rem 1.2rem; border-top: 1px solid rgba(138,132,128,.25);
     }
     .stone-prev-n {
       font-family: var(--font-mono); font-size: .56rem;
@@ -585,8 +413,7 @@
     .stone-prev-info { flex: 1; min-width: 0; }
     .stone-prev-song {
       font-family: var(--font-stone2); font-size: clamp(.74rem, 1.8vh, 1.1rem); font-weight: 600;
-      color: var(--stone-txt2);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      color: var(--stone-txt2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       text-shadow: 1px 1px 0 rgba(255,255,255,.4), -1px -1px 0 rgba(0,0,0,.15);
     }
     .stone-prev-art {
@@ -595,50 +422,6 @@
       text-shadow: 1px 1px 0 rgba(255,255,255,.3);
     }
 
-    /* ── CONTROLS ── sit BELOW the stone, on the "ground" ── */
-    .stone-controls {
-      display: flex; align-items: center; gap: .8rem;
-      margin-top: .6rem;
-      padding: .55rem .9rem;
-      background: rgba(11,8,7,.75);
-      border: 1px solid rgba(200,120,10,.2);
-      border-radius: 2px;
-      backdrop-filter: blur(4px);
-    }
-    .play-btn {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: var(--amber); border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .85rem; color: #fff; flex-shrink: 0;
-      transition: all .18s; box-shadow: 0 2px 8px rgba(200,120,10,.5);
-    }
-    .play-btn:hover{background:var(--amber2);transform:scale(1.08);}
-    .play-btn:active{transform:scale(.94);}
-    .vol-row{display:flex;align-items:center;gap:.35rem;flex:1;}
-    .vol-icon{font-size:.72rem;color:var(--sepia);}
-    input[type=range]{
-      -webkit-appearance:none;flex:1;height:2px;
-      background:rgba(255,255,255,.15);border-radius:1px;outline:none;cursor:pointer;
-    }
-    input[type=range]::-webkit-slider-thumb{
-      -webkit-appearance:none;width:11px;height:11px;border-radius:50%;
-      background:var(--amber);box-shadow:0 0 4px rgba(200,120,10,.5);
-    }
-    .sig-tag{
-      font-family:var(--font-mono);font-size:.56rem;
-      letter-spacing:.08em;color:var(--sepia);flex-shrink:0;
-    }
-    .sig-tag span{color:#4caf50;}
-
-    /* Dirt base — the stone sits in the ground */
-    .stone-dirt {
-      width: 85%; height: 10px; margin: 0 auto;
-      background: linear-gradient(to bottom, #1a1208, #0e0a06);
-      border-radius: 0 0 4px 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.6);
-    }
-
-    /* ── CONNECTION BANNER ── */
     .conn-banner{
       position:fixed;top:0;left:0;right:0;
       background:var(--red2);color:var(--cream);
@@ -648,9 +431,6 @@
     }
     .conn-banner.show{display:block;}
 
-
-
-    /* ── FOOTER ── */
     .site-footer{
       position:fixed;bottom:0;left:0;right:0;z-index:5;
       text-align:center;padding:.45rem;
@@ -661,31 +441,18 @@
     }
     .site-footer a{color:var(--amber);pointer-events:all;text-decoration:none;}
 
-
-    /* ── BLOOD DRIPS ── */
-    .blood-wrap {
-      position: relative;
-      display: inline-block;
-    }
+    .blood-wrap { position: relative; display: inline-block; }
     .blood-drip {
-      position: absolute;
-      top: 100%;
-      width: 5px;
-      border-radius: 0 0 50% 50%;
-      background: #8b0000;
+      position: absolute; top: 100%; width: 5px;
+      border-radius: 0 0 50% 50%; background: #8b0000;
       transform-origin: top center;
       animation: drip linear infinite;
       box-shadow: 0 0 4px rgba(139,0,0,.6);
     }
     .blood-drip::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 9px; height: 9px;
-      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-      background: #8b0000;
+      content: ''; position: absolute; bottom: -6px; left: 50%;
+      transform: translateX(-50%); width: 9px; height: 9px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; background: #8b0000;
     }
     @keyframes drip {
       0%   { height: 0px;  opacity: 0; }
@@ -695,230 +462,106 @@
       100% { height: 44px; opacity: 0; }
     }
     .station-title-wrap, .station-sub-wrap {
-      position: relative;
-      display: block;
-      width: 100%;
-      text-align: center;
+      position: relative; display: block; width: 100%; text-align: center;
     }
 
-    /* ── CREEPY OLD TV ── */
     .tv-wrap {
-      position: fixed;
-      bottom: 0;
-      right: 2%;
-      width: clamp(120px, 16vw, 200px);
-      z-index: 15;
-      pointer-events: none;
-
+      position: fixed; bottom: 0; right: 2%;
+      width: clamp(120px, 16vw, 200px); z-index: 15; pointer-events: none;
     }
-
     .tv-body {
-      position: relative;
-      width: 100%;
-      padding-bottom: 90%;
+      position: relative; width: 100%; padding-bottom: 90%;
       background: linear-gradient(160deg, #3a3530 0%, #2a2520 40%, #1e1a16 100%);
       border-radius: 8px 8px 4px 4px;
-      box-shadow:
-        inset 3px 3px 8px rgba(255,255,255,.08),
-        inset -3px -3px 8px rgba(0,0,0,.6),
-        0 8px 20px rgba(0,0,0,.8);
+      box-shadow: inset 3px 3px 8px rgba(255,255,255,.08), inset -3px -3px 8px rgba(0,0,0,.6), 0 8px 20px rgba(0,0,0,.8);
     }
-
-    /* Dirt and grime streaks */
     .tv-body::before {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: 8px 8px 4px 4px;
+      content: ''; position: absolute; inset: 0; border-radius: 8px 8px 4px 4px;
       background:
         linear-gradient(175deg, rgba(80,70,50,.15) 0%, transparent 40%),
         radial-gradient(ellipse 30% 50% at 20% 30%, rgba(0,0,0,.2) 0%, transparent 60%),
         radial-gradient(ellipse 20% 30% at 75% 60%, rgba(0,0,0,.25) 0%, transparent 60%);
       pointer-events: none;
     }
-
-    /* Screen bezel */
     .tv-screen-bezel {
-      position: absolute;
-      top: 8%; left: 7%; right: 28%; bottom: 18%;
-      background: #0a0a0a;
-      border-radius: 6px;
-      box-shadow:
-        inset 0 0 12px rgba(0,0,0,.9),
-        inset 2px 2px 6px rgba(0,0,0,.8);
+      position: absolute; top: 8%; left: 7%; right: 28%; bottom: 18%;
+      background: #0a0a0a; border-radius: 6px;
+      box-shadow: inset 0 0 12px rgba(0,0,0,.9), inset 2px 2px 6px rgba(0,0,0,.8);
       overflow: hidden;
     }
-
-    /* The actual screen surface */
     .tv-screen {
-      position: absolute; inset: 0;
-      background: #050505;
-      border-radius: 5px;
-      overflow: hidden;
+      position: absolute; inset: 0; background: #050505;
+      border-radius: 5px; overflow: hidden;
     }
-
-    /* Static noise overlay */
     .tv-static {
-      position: absolute; inset: 0;
-      opacity: 0;
+      position: absolute; inset: 0; opacity: 0;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
       mix-blend-mode: screen;
     }
-
-    /* Figure shown on screen */
     .tv-figure {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      opacity: 0;
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: clamp(1.8rem, 4vw, 3rem); opacity: 0;
       filter: grayscale(1) contrast(2) brightness(.6);
     }
-
-    /* Scan lines over screen */
     .tv-scanlines {
       position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        0deg, transparent, transparent 2px,
-        rgba(0,0,0,.3) 2px, rgba(0,0,0,.3) 4px
-      );
-      pointer-events: none;
-      border-radius: 5px;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.3) 2px, rgba(0,0,0,.3) 4px);
+      pointer-events: none; border-radius: 5px;
     }
-
-    /* Glass crack — upper right of screen */
     .tv-crack {
-      position: absolute;
-      top: 0; right: 0;
-      width: 45%; height: 45%;
+      position: absolute; top: 0; right: 0; width: 45%; height: 45%;
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M85 5 Q70 20 75 35 Q80 45 65 55 Q55 62 60 75' stroke='rgba(255,255,255,0.55)' stroke-width='1.2' fill='none'/%3E%3Cpath d='M75 35 Q85 38 92 45' stroke='rgba(255,255,255,0.4)' stroke-width='0.8' fill='none'/%3E%3Cpath d='M65 55 Q55 50 48 58' stroke='rgba(255,255,255,0.35)' stroke-width='0.7' fill='none'/%3E%3Cpath d='M85 5 Q90 12 95 8' stroke='rgba(255,255,255,0.3)' stroke-width='0.6' fill='none'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 5;
+      pointer-events: none; z-index: 5;
     }
-
-    /* Electricity crackle */
     .tv-electric {
-      position: absolute; inset: -4px;
-      border-radius: 8px;
-      opacity: 0;
-      box-shadow:
-        0 0 8px 2px rgba(120,180,255,.9),
-        0 0 20px 4px rgba(80,140,255,.5),
-        inset 0 0 8px rgba(120,180,255,.3);
+      position: absolute; inset: -4px; border-radius: 8px; opacity: 0;
+      box-shadow: 0 0 8px 2px rgba(120,180,255,.9), 0 0 20px 4px rgba(80,140,255,.5), inset 0 0 8px rgba(120,180,255,.3);
     }
-
-    /* Control knobs on right side */
     .tv-controls {
-      position: absolute;
-      top: 12%; right: 4%; bottom: 15%;
-      width: 18%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
+      position: absolute; top: 12%; right: 4%; bottom: 15%; width: 18%;
+      display: flex; flex-direction: column; align-items: center; justify-content: space-around;
     }
     .tv-knob {
-      width: 45%;
-      aspect-ratio: 1;
-      border-radius: 50%;
+      width: 45%; aspect-ratio: 1; border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #5a5248, #2a2420);
       box-shadow: inset 1px 1px 3px rgba(255,255,255,.15), inset -1px -1px 3px rgba(0,0,0,.5);
     }
-    .tv-knob-line {
-      width: 60%;
-      height: 2px;
-      background: #4a4440;
-      border-radius: 1px;
-    }
-
-    /* TV stand / legs */
-    .tv-legs {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 15%;
-      height: 8px;
-    }
-    .tv-leg {
-      width: 12%;
-      height: 100%;
-      background: linear-gradient(180deg, #2a2520, #1a1510);
-      border-radius: 0 0 3px 3px;
-    }
-
-    /* Antenna */
+    .tv-knob-line { width: 60%; height: 2px; background: #4a4440; border-radius: 1px; }
+    .tv-legs { display: flex; justify-content: space-between; padding: 0 15%; height: 8px; }
+    .tv-leg { width: 12%; height: 100%; background: linear-gradient(180deg, #2a2520, #1a1510); border-radius: 0 0 3px 3px; }
     .tv-antenna-wrap {
-      position: absolute;
-      top: -22%; left: 20%; right: 20%;
-      display: flex;
-      justify-content: space-around;
-      height: 22%;
+      position: absolute; top: -22%; left: 20%; right: 20%;
+      display: flex; justify-content: space-around; height: 22%;
     }
-    .tv-antenna {
-      width: 2px;
-      height: 100%;
-      background: #3a3530;
-      transform-origin: bottom center;
-    }
+    .tv-antenna { width: 2px; height: 100%; background: #3a3530; transform-origin: bottom center; }
     .tv-antenna:first-child { transform: rotate(-20deg); }
     .tv-antenna:last-child  { transform: rotate(20deg); }
-
-    /* Glow when on */
     .tv-glow {
-      position: absolute; inset: -8px;
-      border-radius: 12px;
-      opacity: 0;
-      background: radial-gradient(ellipse at 50% 50%,
-        rgba(100,160,100,.15) 0%, transparent 70%);
+      position: absolute; inset: -8px; border-radius: 12px; opacity: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(100,160,100,.15) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    /* ON state classes — toggled by JS */
     .tv-wrap.crackling .tv-electric { animation: elec-flash .15s ease-in-out 4; }
     .tv-wrap.crackling .tv-static   { animation: static-show .6s ease-in-out; }
     .tv-wrap.showing   .tv-figure   { animation: figure-show 1.8s ease-in-out; }
     .tv-wrap.showing   .tv-glow     { animation: glow-show 1.8s ease-in-out; }
     .tv-wrap.showing   .tv-screen   { animation: screen-on 1.8s ease-in-out; }
 
-    @keyframes elec-flash {
-      0%,100%{ opacity:0; }
-      50%    { opacity:1; }
-    }
-    @keyframes static-show {
-      0%  { opacity:0; }
-      20% { opacity:.8; }
-      60% { opacity:.6; }
-      100%{ opacity:0; }
-    }
-    @keyframes figure-show {
-      0%  { opacity:0; }
-      15% { opacity:0; }
-      25% { opacity:.9; }
-      75% { opacity:.85; }
-      90% { opacity:.4; }
-      100%{ opacity:0; }
-    }
-    @keyframes glow-show {
-      0%,100%{ opacity:0; }
-      30%,70%{ opacity:1; }
-    }
-    @keyframes screen-on {
-      0%  { background:#050505; }
-      20% { background:#181818; }
-      30% { background:#0e1a0e; }
-      75% { background:#0a140a; }
-      100%{ background:#050505; }
-    }
+    @keyframes elec-flash { 0%,100%{ opacity:0; } 50%{ opacity:1; } }
+    @keyframes static-show { 0%{ opacity:0; } 20%{ opacity:.8; } 60%{ opacity:.6; } 100%{ opacity:0; } }
+    @keyframes figure-show { 0%{ opacity:0; } 15%{ opacity:0; } 25%{ opacity:.9; } 75%{ opacity:.85; } 90%{ opacity:.4; } 100%{ opacity:0; } }
+    @keyframes glow-show { 0%,100%{ opacity:0; } 30%,70%{ opacity:1; } }
+    @keyframes screen-on { 0%{ background:#050505; } 20%{ background:#181818; } 30%{ background:#0e1a0e; } 75%{ background:#0a140a; } 100%{ background:#050505; } }
 
     @media(max-width:480px){
       .tv-wrap { width: 90px; right: 1%; }
-    }
-
-        @media(max-width:480px){
-      .haunted-house{width:190px;}.dead-trees{width:130px;}
     }
   </style>
 </head>
 <body>
 
-<div class="conn-banner" id="conn-banner">⚠ Cannot reach Navidrome — showing demo data</div>
+<div class="conn-banner" id="conn-banner">⚠ Cannot reach stream — showing demo data</div>
 
 <!-- ═══ SCENE ═══ -->
 <div class="scene">
@@ -929,28 +572,19 @@
   <div class="cloud" style="left:35%">☁</div>
   <div class="cloud" style="left:72%">☁</div>
 
-  <!-- GOTHIC CHURCH — centre background -->
   <svg class="church" viewBox="0 0 340 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Main chapel body -->
     <rect x="80" y="130" width="180" height="190" fill="#0e1014"/>
-    <!-- Nave roof -->
     <polygon points="70,130 170,50 270,130" fill="#0c0e12"/>
-    <!-- Bell tower left -->
     <rect x="30" y="100" width="65" height="220" fill="#0d0f13"/>
     <polygon points="20,100 62,40 105,100" fill="#0b0d11"/>
-    <!-- Tower spire -->
     <polygon points="52,40 62,5 72,40" fill="#090b0f"/>
-    <!-- Arched windows — glowing -->
     <path d="M148 90 Q148 75 170 75 Q192 75 192 90 L192 115 L148 115 Z" fill="#1a1800" class="win-flicker"/>
     <path d="M44 125 Q44 112 62 112 Q80 112 80 125 L80 148 L44 148 Z" fill="#1a1400" class="win-flicker2"/>
-    <!-- Cross on tower -->
     <line x1="62" y1="5" x2="62" y2="28" stroke="#181c22" stroke-width="3"/>
     <line x1="55" y1="14" x2="69" y2="14" stroke="#181c22" stroke-width="3"/>
-    <!-- Door -->
     <path d="M148 320 L148 240 Q148 225 170 225 Q192 225 192 240 L192 320 Z" fill="#080a0d"/>
   </svg>
 
-  <!-- GNARLED TREE — LEFT arching over -->
   <svg class="tree-left" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M-10 400 Q20 320 10 260 Q0 200 30 160 Q55 125 40 80 Q30 45 50 10" stroke="#0a0c10" stroke-width="14" fill="none" stroke-linecap="round"/>
     <path d="M30 160 Q70 130 110 90 Q140 60 170 30" stroke="#0a0c10" stroke-width="7" fill="none" stroke-linecap="round"/>
@@ -961,7 +595,6 @@
     <path d="M30 320 Q65 295 90 270" stroke="#0a0c10" stroke-width="4" fill="none" stroke-linecap="round"/>
   </svg>
 
-  <!-- GNARLED TREE — RIGHT arching over -->
   <svg class="tree-right" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M310 400 Q280 320 290 255 Q300 195 268 158 Q242 126 256 78 Q266 42 248 8" stroke="#0a0c10" stroke-width="13" fill="none" stroke-linecap="round"/>
     <path d="M268 158 Q228 128 188 88 Q158 58 128 28" stroke="#0a0c10" stroke-width="6" fill="none" stroke-linecap="round"/>
@@ -971,20 +604,12 @@
     <path d="M220 205 Q200 220 182 205 Q168 193 155 180" stroke="#0a0c10" stroke-width="3" fill="none" stroke-linecap="round"/>
   </svg>
 
-  <!-- RICH GRAVEYARD GROUND SCENE -->
   <svg class="bg-stones" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-
-    <!-- ── GROUND BASE — uneven dirt and dead grass ── -->
-    <!-- Main ground plane — dark earth -->
     <ellipse cx="500" cy="390" rx="600" ry="40" fill="#0e1008" opacity=".9"/>
-
-    <!-- Dirt patches — uneven ground texture -->
     <ellipse cx="150" cy="375" rx="120" ry="18" fill="#12140e" opacity=".7"/>
     <ellipse cx="420" cy="380" rx="160" ry="15" fill="#0e100a" opacity=".6"/>
     <ellipse cx="720" cy="372" rx="140" ry="16" fill="#121408" opacity=".7"/>
     <ellipse cx="900" cy="378" rx="110" ry="14" fill="#0e100a" opacity=".6"/>
-
-    <!-- Dead grey grass tufts — left side -->
     <line x1="30"  y1="360" x2="25"  y2="340" stroke="#2a2e22" stroke-width="1.5" opacity=".7"/>
     <line x1="35"  y1="360" x2="38"  y2="338" stroke="#2a2e22" stroke-width="1.5" opacity=".6"/>
     <line x1="40"  y1="360" x2="44"  y2="342" stroke="#282c20" stroke-width="1.5" opacity=".7"/>
@@ -992,20 +617,14 @@
     <line x1="60"  y1="358" x2="63"  y2="335" stroke="#262a1e" stroke-width="1.5" opacity=".6"/>
     <line x1="80"  y1="360" x2="76"  y2="340" stroke="#2a2e22" stroke-width="1.5" opacity=".7"/>
     <line x1="85"  y1="360" x2="88"  y2="338" stroke="#282c20" stroke-width="1.5" opacity=".5"/>
-
-    <!-- Dead grass tufts — centre left -->
     <line x1="190" y1="365" x2="185" y2="344" stroke="#2a2e22" stroke-width="1.5" opacity=".6"/>
     <line x1="196" y1="365" x2="200" y2="342" stroke="#282c20" stroke-width="1.5" opacity=".7"/>
     <line x1="210" y1="363" x2="206" y2="341" stroke="#2a2e22" stroke-width="1.5" opacity=".5"/>
     <line x1="225" y1="365" x2="228" y2="343" stroke="#262a1e" stroke-width="1.5" opacity=".6"/>
-
-    <!-- Dead grass tufts — centre right -->
     <line x1="640" y1="364" x2="636" y2="342" stroke="#2a2e22" stroke-width="1.5" opacity=".6"/>
     <line x1="648" y1="362" x2="652" y2="340" stroke="#282c20" stroke-width="1.5" opacity=".5"/>
     <line x1="660" y1="364" x2="657" y2="342" stroke="#2a2e22" stroke-width="1.5" opacity=".7"/>
     <line x1="675" y1="363" x2="678" y2="341" stroke="#262a1e" stroke-width="1.5" opacity=".6"/>
-
-    <!-- Dead grass tufts — right side -->
     <line x1="840" y1="362" x2="836" y2="340" stroke="#2a2e22" stroke-width="1.5" opacity=".6"/>
     <line x1="848" y1="360" x2="852" y2="338" stroke="#282c20" stroke-width="1.5" opacity=".5"/>
     <line x1="860" y1="362" x2="856" y2="340" stroke="#2a2e22" stroke-width="1.5" opacity=".7"/>
@@ -1013,24 +632,16 @@
     <line x1="930" y1="358" x2="926" y2="336" stroke="#2a2e22" stroke-width="1.5" opacity=".6"/>
     <line x1="940" y1="358" x2="944" y2="336" stroke="#282c20" stroke-width="1.5" opacity=".5"/>
     <line x1="960" y1="360" x2="956" y2="338" stroke="#2a2e22" stroke-width="1.5" opacity=".7"/>
-
-    <!-- Small rocks scattered on ground -->
     <ellipse cx="100" cy="368" rx="8"  ry="4"  fill="#1e2018" opacity=".7" transform="rotate(-5,100,368)"/>
     <ellipse cx="320" cy="372" rx="6"  ry="3"  fill="#1a1c14" opacity=".6"/>
     <ellipse cx="490" cy="376" rx="10" ry="4"  fill="#1c1e16" opacity=".6" transform="rotate(8,490,376)"/>
     <ellipse cx="750" cy="370" rx="7"  ry="3"  fill="#1e2018" opacity=".65" transform="rotate(-3,750,370)"/>
     <ellipse cx="910" cy="374" rx="9"  ry="4"  fill="#1a1c14" opacity=".6" transform="rotate(6,910,374)"/>
-
-    <!-- ── STANDING GRAVESTONES ── -->
-
-    <!-- Far left — tall narrow leaning stone -->
     <g transform="rotate(-6,66,340)">
       <rect x="40" y="200" width="52" height="140" rx="24 24 3 3" fill="#1e2228" opacity=".9"/>
       <rect x="44" y="204" width="44" height="130" rx="20 20 2 2" fill="none" stroke="#252c34" stroke-width="1.5" opacity=".5"/>
       <line x1="66" y1="225" x2="66" y2="280" stroke="#252c34" stroke-width="1" opacity=".3"/>
     </g>
-
-    <!-- Left — medium rounded top with engraving -->
     <g>
       <rect x="130" y="160" width="72" height="160" rx="34 34 4 4" fill="#1c2228" opacity=".9"/>
       <rect x="135" y="165" width="62" height="148" rx="30 30 3 3" fill="none" stroke="#252c34" stroke-width="1.5" opacity=".5"/>
@@ -1038,114 +649,70 @@
       <line x1="145" y1="250" x2="187" y2="250" stroke="#252c34" stroke-width="1" opacity=".4"/>
       <text x="166" y="265" font-size="7" fill="#252c34" text-anchor="middle" font-family="serif" opacity=".6">1889</text>
     </g>
-
-    <!-- Left of centre — Celtic cross -->
     <g opacity=".85">
       <rect x="282" y="80" width="22" height="240" rx="4" fill="#1e2430"/>
       <rect x="255" y="148" width="76" height="22" rx="4" fill="#1e2430"/>
       <circle cx="293" cy="159" r="26" fill="none" stroke="#1e2430" stroke-width="8"/>
       <circle cx="293" cy="159" r="18" fill="none" stroke="#252c38" stroke-width="2" opacity=".4"/>
-      <!-- Celtic knotwork hint -->
       <circle cx="293" cy="159" r="10" fill="none" stroke="#252c38" stroke-width="1.5" opacity=".35"/>
       <line x1="293" y1="133" x2="293" y2="185" stroke="#252c38" stroke-width="1" opacity=".3"/>
       <line x1="267" y1="159" x2="319" y2="159" stroke="#252c38" stroke-width="1" opacity=".3"/>
     </g>
-
-    <!-- ── OVERTURNED / FALLEN GRAVESTONES ── -->
-
-    <!-- Fallen stone — flat on ground, left of centre -->
     <g transform="rotate(-85,390,360)">
       <rect x="360" y="320" width="60" height="100" rx="28 28 3 3" fill="#1c2028" opacity=".8"/>
       <rect x="364" y="324" width="52" height="90" rx="24 24 2 2" fill="none" stroke="#252830" stroke-width="1.5" opacity=".4"/>
     </g>
-    <!-- Shadow under fallen stone -->
     <ellipse cx="388" cy="368" rx="45" ry="6" fill="#080a0c" opacity=".5"/>
-
-    <!-- Cracked broken stone — centre -->
     <g opacity=".85">
       <rect x="440" y="200" width="58" height="130" rx="28 28 3 3" fill="#1a1e26" transform="rotate(3,469,265)"/>
-      <!-- Break line across the stone -->
       <line x1="440" y1="280" x2="498" y2="272" stroke="#080c14" stroke-width="3" opacity=".9"/>
       <line x1="440" y1="280" x2="498" y2="272" stroke="#252c38" stroke-width="1" opacity=".5"/>
-      <!-- Top piece slightly displaced -->
       <rect x="442" y="198" width="56" height="84" rx="26 26 0 0" fill="#1c2028" transform="rotate(5,470,240)"/>
     </g>
-
-    <!-- Another fallen stone — right of centre, angled differently -->
     <g transform="rotate(78,620,355)">
       <rect x="595" y="290" width="50" height="90" rx="23 23 3 3" fill="#1a1e26" opacity=".75"/>
     </g>
     <ellipse cx="618" cy="362" rx="38" ry="5" fill="#080a0c" opacity=".45"/>
-
-    <!-- Right — tall obelisk, slightly leaning -->
     <g transform="rotate(3,735,320)">
       <polygon points="720,60 742,320 708,320" fill="#1c2028" opacity=".85"/>
       <polygon points="723,80 740,310 712,310" fill="none" stroke="#252c38" stroke-width="1" opacity=".3"/>
       <line x1="724" y1="150" x2="738" y2="148" stroke="#252c38" stroke-width="1" opacity=".3"/>
     </g>
-
-    <!-- Right mid — squat rounded stone -->
     <g transform="rotate(-4,840,330)">
       <rect x="810" y="230" width="62" height="110" rx="30 30 4 4" fill="#1e2430" opacity=".85"/>
       <rect x="815" y="235" width="52" height="98" rx="26 26 3 3" fill="none" stroke="#252c3a" stroke-width="1.5" opacity=".4"/>
       <text x="841" y="295" font-size="8" fill="#2a3040" text-anchor="middle" font-family="serif" opacity=".7">1902</text>
     </g>
-
-    <!-- Far right — leaning stone -->
     <g transform="rotate(8,940,340)">
       <rect x="912" y="195" width="56" height="155" rx="26 26 3 3" fill="#1c2028" opacity=".8"/>
       <rect x="917" y="200" width="46" height="143" rx="22 22 2 2" fill="none" stroke="#252c34" stroke-width="1.5" opacity=".4"/>
     </g>
-
-    <!-- ── BROKEN FENCE POSTS ── -->
-    <!-- Left section -->
     <line x1="100" y1="340" x2="100" y2="370" stroke="#1a1c14" stroke-width="4" stroke-linecap="round" opacity=".7"/>
     <line x1="120" y1="336" x2="120" y2="370" stroke="#1a1c14" stroke-width="4" stroke-linecap="round" opacity=".6"/>
     <line x1="100" y1="352" x2="140" y2="348" stroke="#1a1c14" stroke-width="2" opacity=".5"/>
-
-    <!-- Right section — broken mid-rail -->
     <line x1="760" y1="338" x2="760" y2="370" stroke="#1a1c14" stroke-width="4" stroke-linecap="round" opacity=".7"/>
     <line x1="780" y1="334" x2="780" y2="370" stroke="#1a1c14" stroke-width="4" stroke-linecap="round" opacity=".6"/>
     <line x1="760" y1="350" x2="775" y2="347" stroke="#1a1c14" stroke-width="2" opacity=".5"/>
-
-    <!-- ── SMALL GROUND DETAILS ── -->
-    <!-- Fallen leaves clusters -->
     <ellipse cx="160" cy="372" rx="12" ry="4" fill="#1e1a0e" opacity=".5" transform="rotate(-10,160,372)"/>
     <ellipse cx="530" cy="375" rx="10" ry="3" fill="#1c180c" opacity=".45" transform="rotate(8,530,375)"/>
     <ellipse cx="820" cy="370" rx="14" ry="4" fill="#1e1a0e" opacity=".5" transform="rotate(-5,820,370)"/>
-
-    <!-- Gnarled root breaking through ground -->
     <path d="M350 380 Q370 365 385 372 Q398 378 410 368" stroke="#141610" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>
     <path d="M385 372 Q390 382 395 378" stroke="#141610" stroke-width="2" fill="none" opacity=".5" stroke-linecap="round"/>
-
-    <!-- Another root right side -->
     <path d="M680 376 Q700 362 715 370 Q728 376 740 366" stroke="#141610" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
-
   </svg>
 
-  <!-- RAVEN ON PEDESTAL — foreground left -->
   <div class="raven-wrap">🦅</div>
-
-  <!-- Fallen leaves -->
   <div class="leaves"></div>
-
-  <!-- Ground spotlight -->
   <div class="ground-light"></div>
-
-  <!-- Fog wisps -->
   <div class="fog-wisp" style="width:40%;left:-5%;animation-duration:28s;animation-delay:0s;"></div>
   <div class="fog-wisp" style="width:55%;left:20%;animation-duration:38s;animation-delay:-14s;bottom:12%;"></div>
   <div class="fog-wisp" style="width:35%;left:65%;animation-duration:32s;animation-delay:-8s;bottom:6%;"></div>
-
-  <!-- Heavy ground fog -->
   <div class="fog"></div>
   <div class="ground"></div>
-
 </div>
 
 <!-- ═══ PAGE ═══ -->
 <div class="page">
-
   <header class="station-header">
     <div class="bat-l">🦇</div>
     <div class="bat-r">🦇</div>
@@ -1161,35 +728,21 @@
     </div>
     <div class="station-sub-wrap blood-wrap">
       <p class="station-sub">Your 24/7 Scary Music Radio Station</p>
-
     </div>
-
   </header>
 
-  <!-- ══════════════════════════════
-       TOMBSTONE WIDGET
-       ══════════════════════════════ -->
+  <!-- TOMBSTONE WIDGET -->
   <div class="tombstone-wrap">
     <div class="tombstone-assembly">
-
-      <!-- Shoulder ledges -->
       <div class="stone-shoulders">
         <div class="stone-shoulder"></div>
         <div class="stone-shoulder"></div>
       </div>
-
       <div class="tombstone">
-
-        <!-- Inner arch overlay for double-arch effect -->
         <div class="stone-inner-arch"></div>
-        <!-- Crack overlay -->
         <div class="stone-crack"></div>
-        <!-- Water stain streaks -->
         <div class="stone-stains"></div>
-        <!-- Moss at base -->
         <div class="stone-moss"></div>
-
-        <!-- SKULL at arch top with scrollwork -->
         <div class="stone-skull-wrap">
           <div class="stone-scrollwork">
             <svg viewBox="0 0 200 28" xmlns="http://www.w3.org/2000/svg" width="80%" style="display:block;margin:0 auto;opacity:.45;">
@@ -1206,10 +759,7 @@
             </svg>
           </div>
         </div>
-
         <div class="stone-rule"></div>
-
-                <!-- Play widget — sits just below skull -->
         <div class="stone-top-player">
           <button class="stone-top-btn" id="play-btn-top" title="Play / Pause">▶</button>
           <div class="stone-top-sig">
@@ -1217,69 +767,37 @@
             <span id="top-sig-lbl" style="font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;color:var(--stone-sub);">TUNE IN</span>
           </div>
         </div>
-
         <div class="stone-rule"></div>
-
-        <!-- NOW PLAYING -->
         <div class="here-lies">Now Playing</div>
-
-        <!-- Song title -->
         <div class="stone-song" id="w-song">Connecting…</div>
-
-        <!-- Artist -->
         <div class="stone-artist" id="w-artist">—</div>
-
-        <!-- Album -->
         <div class="stone-album" id="w-album">—</div>
-
-        <!-- Tiny visualizer -->
         <div class="stone-viz" id="stone-viz"></div>
-
         <div class="stone-rule"></div>
-
-        <!-- Previously played -->
         <div class="stone-prev-head">~ Preceded in Death by ~</div>
         <div id="prev-list"></div>
-
-        <!-- RIP -->
         <div class="stone-ornament" style="padding-top:.5rem;padding-bottom:.5rem;font-size:.75rem;opacity:.4;">
           ✦ R.I.P. ✦
         </div>
-
-      </div><!-- end .tombstone -->
-
-      <!-- Base feet -->
+      </div>
       <div class="stone-feet">
         <div class="stone-foot"></div>
         <div class="stone-foot"></div>
       </div>
+    </div>
+  </div>
+</div>
 
-    </div><!-- end .tombstone-assembly -->
-
-   
-
-  </div><!-- end .tombstone-wrap -->
-
-</div><!-- end page -->
-
-<!-- ═══ CREEPY OLD TV ═══ -->
+<!-- CREEPY OLD TV -->
 <div class="tv-wrap" id="spooky-tv">
   <div style="position:relative;">
-    <!-- Antennas -->
     <div class="tv-antenna-wrap">
       <div class="tv-antenna"></div>
       <div class="tv-antenna"></div>
     </div>
-
-    <!-- Main body -->
     <div class="tv-body">
-
-      <!-- Electricity crackle ring -->
       <div class="tv-electric"></div>
-      <!-- Glow when showing -->
       <div class="tv-glow"></div>
-
-      <!-- Screen bezel -->
       <div class="tv-screen-bezel">
         <div class="tv-screen" id="tv-screen">
           <div class="tv-static"></div>
@@ -1288,8 +806,6 @@
           <div class="tv-crack"></div>
         </div>
       </div>
-
-      <!-- Right side controls -->
       <div class="tv-controls">
         <div class="tv-knob"></div>
         <div class="tv-knob-line"></div>
@@ -1297,10 +813,7 @@
         <div class="tv-knob-line"></div>
         <div class="tv-knob"></div>
       </div>
-
-    </div><!-- end tv-body -->
-
-    <!-- Legs -->
+    </div>
     <div class="tv-legs">
       <div class="tv-leg"></div>
       <div class="tv-leg"></div>
@@ -1317,46 +830,56 @@
 <audio id="radio-audio" preload="none"></audio>
 
 <script>
-/* ══════════════════════════════════════════
-   ██  CONFIGURATION — edit these 4 values  ██
-   ══════════════════════════════════════════ */
-const CONFIG = { serverUrl: '', username: '', password: '', streamUrl: 'https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween', refreshMs: 10000 };
-/* ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   ██  CONFIGURATION — THE ONLY VALUES YOU NEED TO CHANGE  ██
+   ══════════════════════════════════════════════════════════════
 
-/* ── SUBSONIC API ── */
-async function sha256hex(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,32);
-}
-async function apiParams() {
-  const salt = Math.random().toString(36).slice(2,10);
-  const tok  = await sha256hex(CONFIG.password + salt);
-  return `u=${encodeURIComponent(CONFIG.username)}&t=${tok}&s=${salt}&v=1.16.0&c=HelloweenRadio&f=json`;
-}
-async function naviGet(endpoint, extra='') {
-  const p   = await apiParams();
-  const res = await fetch(`${CONFIG.serverUrl}/rest/${endpoint}?${p}${extra}`,
-    { signal: AbortSignal.timeout(6000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const d = await res.json();
-  const r = d['subsonic-response'];
-  if (r.status !== 'ok') throw new Error(r.error?.message || 'API error');
-  return r;
-}
-async function fetchNowPlaying() {
-  const r    = await naviGet('getNowPlaying');
-  const list = r.nowPlaying?.entry || [];
-  if (list.length > 0) return { current: list[0], history: list.slice(1,3) };
-  const r2   = await naviGet('getAlbumList','&type=recent&size=3');
-  const albs = r2.albumList?.album || [];
-  if (!albs.length) return null;
-  return {
-    current: { title:albs[0].name, artist:albs[0].artist, album:albs[0].name },
-    history: albs.slice(1).map(a=>({ title:a.name, artist:a.artist, album:a.name }))
-  };
-}
+   STREAM_URL
+   ----------
+   The full URL of your Icecast mount point that the browser
+   will request audio from. Examples:
 
-/* ── DEMO DATA ── */
+     Local network (home only):
+       'http://192.168.1.100:8000/helloween'
+
+     Cloudflare Tunnel (public, no port):
+       'https://your-tunnel-name.trycloudflare.com/helloween'
+
+     Custom domain via Cloudflare Tunnel:
+       'https://radio.yourdomain.com/helloween'
+
+   ICECAST_STATUS_URL
+   ------------------
+   The URL of Icecast's JSON status endpoint — used to fetch
+   "now playing" track info. It is usually the same base URL
+   as your stream but with /status-json.xsl appended. Examples:
+
+     Local network:
+       'http://192.168.1.100:8000/status-json.xsl'
+
+     Cloudflare Tunnel:
+       'https://your-tunnel-name.trycloudflare.com/status-json.xsl'
+
+     Custom domain:
+       'https://radio.yourdomain.com/status-json.xsl'
+
+   REFRESH_MS
+   ----------
+   How often (milliseconds) to poll Icecast for the current
+   track. 10000 = every 10 seconds. Fine to leave as-is.
+
+   ══════════════════════════════════════════════════════════════ */
+
+const STREAM_URL        = 'https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween';
+const ICECAST_STATUS_URL = 'https://automobile-optimize-hiring-occupied.trycloudflare.com/status-json.xsl';
+const REFRESH_MS        = 10000;
+
+/* ══════════════════════════════════════════════════════════════
+   ██  END OF CONFIGURATION — do not edit below this line  ██
+   ══════════════════════════════════════════════════════════════ */
+
+
+/* ── DEMO FALLBACK DATA ── */
 const DEMO = [
   { title:'Thriller',             artist:'Michael Jackson',  album:'Thriller' },
   { title:'Monster Mash',         artist:'Bobby Pickett',    album:'Monster Mash' },
@@ -1367,86 +890,77 @@ const DEMO = [
   { title:'People Are Strange',   artist:'The Doors',        album:'Strange Days' },
   { title:'Werewolves of London', artist:'Warren Zevon',     album:'Excitable Boy' },
 ];
-let demoIdx=0, demoMode=false;
+let demoIdx = 0, demoMode = false;
 
-/* ── VISUALIZER ── */
+/* ── VISUALIZER BARS ── */
 const vizEl = document.getElementById('stone-viz');
-for (let i=0;i<28;i++){
-  const b=document.createElement('div');
-  b.className='sv-bar paused';
-  b.style.cssText=`height:${6+Math.random()*12}px;animation-duration:${(.25+Math.random()*.5).toFixed(2)}s;animation-delay:${(Math.random()*1).toFixed(2)}s;`;
+for (let i = 0; i < 28; i++) {
+  const b = document.createElement('div');
+  b.className = 'sv-bar paused';
+  b.style.cssText = `height:${6 + Math.random() * 12}px;animation-duration:${(.25 + Math.random() * .5).toFixed(2)}s;animation-delay:${(Math.random()).toFixed(2)}s;`;
   vizEl.appendChild(b);
 }
 
-/* ── RENDER ── */
+/* ── RENDER NOW PLAYING ── */
 function renderNowPlaying(song, history) {
   document.getElementById('w-song').textContent   = song.title  || '—';
   document.getElementById('w-artist').textContent = song.artist || '—';
   document.getElementById('w-album').textContent  = song.album  || '';
   const pl = document.getElementById('prev-list');
-  pl.innerHTML = (history||[]).slice(0,2).map((s,i)=>`
+  pl.innerHTML = (history || []).slice(0, 2).map((s, i) => `
     <div class="stone-prev-item">
-      <span class="stone-prev-n">${i+1}</span>
+      <span class="stone-prev-n">${i + 1}</span>
       <div class="stone-prev-info">
-        <div class="stone-prev-song">${s.title||'—'}</div>
-        <div class="stone-prev-art">${s.artist||''}</div>
+        <div class="stone-prev-song">${s.title || '—'}</div>
+        <div class="stone-prev-art">${s.artist || ''}</div>
       </div>
     </div>`).join('');
 }
 
 /* ── PLAYER ── */
-const audio=document.getElementById('radio-audio');
-audio.volume=0.8;
-let playing=false;
-function togglePlay(){
-  const btnTop=document.getElementById('play-btn-top');
-  const sig=document.getElementById('sig-lbl');
-  const topSig=document.getElementById('top-sig-lbl');
-  const liveDot=document.getElementById('top-live-dot');
-  if(playing){
-    audio.pause(); playing=false;
-    if(btnTop) btnTop.textContent='▶';
-    document.querySelectorAll('.sv-bar').forEach(b=>b.classList.add('paused'));
-    sig.textContent='PAUSED'; sig.style.color='';
-    if(topSig) topSig.textContent='TUNE IN';
-    if(liveDot) liveDot.classList.remove('live');
+const audio = document.getElementById('radio-audio');
+audio.volume = 0.8;
+let playing = false;
+
+function setPlaying() {
+  playing = true;
+  document.getElementById('play-btn-top').textContent = '⏸';
+  document.querySelectorAll('.sv-bar').forEach(b => b.classList.remove('paused'));
+  document.getElementById('top-sig-lbl').textContent = 'ON AIR';
+  document.getElementById('top-live-dot').classList.add('live');
+}
+
+function setPaused() {
+  playing = false;
+  document.getElementById('play-btn-top').textContent = '▶';
+  document.querySelectorAll('.sv-bar').forEach(b => b.classList.add('paused'));
+  document.getElementById('top-sig-lbl').textContent = 'TUNE IN';
+  document.getElementById('top-live-dot').classList.remove('live');
+}
+
+function togglePlay() {
+  if (playing) {
+    audio.pause();
+    setPaused();
   } else {
-    sig.textContent='TUNING'; sig.style.color='#e8a030';
-    if(topSig) topSig.textContent='TUNING…';
-    audio.src=CONFIG.streamUrl;
+    document.getElementById('top-sig-lbl').textContent = 'TUNING…';
+    audio.src = STREAM_URL;
     audio.play()
-      .then(()=>setPlaying())
-      .catch(()=>{setPlaying();sig.textContent='DEMO';sig.style.color='';});
+      .then(() => setPlaying())
+      .catch(() => setPlaying()); // still show as playing even if stream is demo-only
   }
 }
-function setPlaying(){
-  playing=true;
-  const btnTop=document.getElementById('play-btn-top');
-  if(btnTop) btnTop.textContent='⏸';
-  document.querySelectorAll('.sv-bar').forEach(b=>b.classList.remove('paused'));
-  const sig=document.getElementById('sig-lbl');
-  const topSig=document.getElementById('top-sig-lbl');
-  const liveDot=document.getElementById('top-live-dot');
-  if(sig.textContent!=='DEMO'){sig.textContent='LIVE';sig.style.color='#4caf50';}
-  if(topSig) topSig.textContent='ON AIR';
-  if(liveDot) liveDot.classList.add('live');
+
+document.getElementById('play-btn-top').addEventListener('click', togglePlay);
+audio.addEventListener('ended', setPaused);
+audio.addEventListener('error', setPaused);
+
+/* ── ICECAST METADATA POLL ── */
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
 }
-function setVol(v){audio.volume=parseFloat(v);}
-
-/* ── ICECAST METADATA POLL ──
-   Pulls now-playing data directly from Icecast's public status endpoint.
-   No credentials needed — completely safe in public code.
-   ✏️ Set ICECAST_STATUS to your Icecast server's status-json.xsl URL.
-   This must be accessible from the browser — use your Cloudflare tunnel URL.
-*/
-const ICECAST_STATUS = 'streamUrl: 'https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween',';
-
-// Keep a rolling history of last 2 songs
-let songHistory = [];
 
 function parseTitleArtist(raw) {
-  // Icecast title field is often "artist - title" or "artist - album - title"
-  // Try to split on first " - "
   if (!raw) return { title: '—', artist: '—', album: '' };
   const parts = raw.split(' - ');
   if (parts.length >= 2) {
@@ -1459,37 +973,31 @@ function parseTitleArtist(raw) {
   return { title: toTitleCase(raw.trim()), artist: '—', album: '' };
 }
 
-function toTitleCase(str) {
-  // Convert "has the devil got a mortgage on you" to "Has The Devil Got A Mortgage On You"
-  return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
-}
-
 let lastTitle = '';
+let songHistory = [];
 
-async function poll(){
+async function poll() {
   try {
-    const res = await fetch(ICECAST_STATUS, { signal: AbortSignal.timeout(6000) });
+    const res = await fetch(ICECAST_STATUS_URL, { signal: AbortSignal.timeout(6000) });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     const src  = data?.icestats?.source;
-    if (!src) throw new Error('No source');
+    if (!src) throw new Error('No source in Icecast response');
 
     const raw    = src.title || '';
     const parsed = parseTitleArtist(raw);
 
-    // If song changed, push old one to history
     if (lastTitle && lastTitle !== raw) {
-      const oldParsed = parseTitleArtist(lastTitle);
-      songHistory.unshift(oldParsed);
+      songHistory.unshift(parseTitleArtist(lastTitle));
       if (songHistory.length > 2) songHistory = songHistory.slice(0, 2);
     }
     lastTitle = raw;
 
+    demoMode = false;
     document.getElementById('conn-banner').classList.remove('show');
     renderNowPlaying(parsed, songHistory);
 
-  } catch(e) {
-    // Fallback to demo if Icecast unreachable
+  } catch (e) {
     if (!demoMode) {
       demoMode = true;
       document.getElementById('conn-banner').classList.add('show');
@@ -1501,94 +1009,27 @@ async function poll(){
     demoIdx++;
   }
 }
+
 poll();
-setInterval(poll, CONFIG.refreshMs);
+setInterval(poll, REFRESH_MS);
 
-
-
-/* ══════════════════════════════════════════════════════
-   SPOOKY TV — plays 5-second clips from 15 public domain
-   horror films hosted on archive.org.
-   Uses HTML5 media fragments (#t=start,end) to play
-   specific timestamps without downloading full films.
-   All films are 100% public domain.
-   ══════════════════════════════════════════════════════ */
+/* ── SPOOKY TV — public domain horror film clips ── */
 const TV_CLIPS = [
-  {
-    title: "Night of the Living Dead (1968)",
-    // Opening cemetery scene — zombie first appears
-    src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=78,83"
-  },
-  {
-    title: "Night of the Living Dead (1968)",
-    // Zombies surrounding the farmhouse
-    src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=1820,1825"
-  },
-  {
-    title: "Nosferatu (1922)",
-    // Count Orlok rising from coffin
-    src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=2460,2465"
-  },
-  {
-    title: "Nosferatu (1922)",
-    // Orlok's shadow on the stairs
-    src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=4200,4205"
-  },
-  {
-    title: "Cabinet of Dr. Caligari (1920)",
-    // Cesare creeping through shadows
-    src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari.mp4#t=2700,2705"
-  },
-  {
-    title: "White Zombie (1932)",
-    // Bela Lugosi's hypnotic stare
-    src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=480,485"
-  },
-  {
-    title: "White Zombie (1932)",
-    // Zombie workers marching
-    src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=1200,1205"
-  },
-  {
-    title: "Phantom of the Opera (1925)",
-    // The unmasking scene
-    src: "https://archive.org/download/ThePhantomOfTheOpera1925/The%20Phantom%20of%20the%20Opera%20%281925%29.mp4#t=4140,4145"
-  },
-  {
-    title: "The Golem (1920)",
-    // Golem awakening
-    src: "https://archive.org/download/TheGolem1920/The%20Golem%20%281920%29.mp4#t=1560,1565"
-  },
-  {
-    title: "Spooks Run Wild (1941)",
-    // Bela Lugosi menacing
-    src: "https://archive.org/download/SpooksRunWild/SpooksRunWild.mp4#t=600,605"
-  },
-  {
-    title: "The Terror (1963)",
-    // Gothic castle scene
-    src: "https://archive.org/download/TheTerror/TheTerror.mp4#t=720,725"
-  },
-  {
-    title: "Dementia 13 (1963)",
-    // Graveyard scene
-    src: "https://archive.org/download/Dementia13/Dementia13.mp4#t=1080,1085"
-  },
-  {
-    title: "The Little Shop of Horrors (1960)",
-    // Plant attack
-    src: "https://archive.org/download/TheLittleShopOfHorrors_201/The%20Little%20Shop%20of%20Horrors.mp4#t=2400,2405"
-  },
-  {
-    title: "Carnival of Souls (1962)",
-    // Ghoul faces emerging
-    src: "https://archive.org/download/CarnivalOfSouls/CarnivalOfSouls.mp4#t=3120,3125"
-  },
-  {
-    title: "Plan 9 from Outer Space (1957)",
-    // Zombies rising from graves
-    src: "https://archive.org/download/PlanNineFromOuterSpace/PlanNineFromOuterSpace.mp4#t=1440,1445"
-  }
+  { src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=78,83" },
+  { src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=1820,1825" },
+  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=2460,2465" },
+  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=4200,4205" },
+  { src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari.mp4#t=2700,2705" },
+  { src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=480,485" },
+  { src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=1200,1205" },
+  { src: "https://archive.org/download/ThePhantomOfTheOpera1925/The%20Phantom%20of%20the%20Opera%20%281925%29.mp4#t=4140,4145" },
+  { src: "https://archive.org/download/TheGolem1920/The%20Golem%20%281920%29.mp4#t=1560,1565" },
+  { src: "https://archive.org/download/SpooksRunWild/SpooksRunWild.mp4#t=600,605" },
+  { src: "https://archive.org/download/TheTerror/TheTerror.mp4#t=720,725" },
+  { src: "https://archive.org/download/Dementia13/Dementia13.mp4#t=1080,1085" },
+  { src: "https://archive.org/download/TheLittleShopOfHorrors_201/The%20Little%20Shop%20of%20Horrors.mp4#t=2400,2405" },
+  { src: "https://archive.org/download/CarnivalOfSouls/CarnivalOfSouls.mp4#t=3120,3125" },
+  { src: "https://archive.org/download/PlanNineFromOuterSpace/PlanNineFromOuterSpace.mp4#t=1440,1445" }
 ];
 
 const tvWrap   = document.getElementById('spooky-tv');
@@ -1597,61 +1038,41 @@ const tvScreen = document.getElementById('tv-screen');
 let clipIndex  = 0;
 let tvVideo    = null;
 
-function createVideoElement(src) {
-  const v = document.createElement('video');
-  v.style.cssText = `
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;border-radius:5px;
-    filter:grayscale(0.6) contrast(1.1) brightness(0.75);
-    opacity:0;transition:opacity .3s;
-  `;
-  v.muted    = true;
-  v.preload  = 'auto';
-  v.playsInline = true;
-  v.src      = src;
-  return v;
-}
-
 function triggerTV() {
-  // Pick next clip in sequence (shuffle through all 15)
   const clip = TV_CLIPS[clipIndex % TV_CLIPS.length];
   clipIndex++;
 
-  // Phase 1 — electricity crackle
   tvWrap.classList.add('crackling');
 
   setTimeout(() => {
     tvWrap.classList.remove('crackling');
-
-    // Phase 2 — static burst
     tvWrap.classList.add('showing');
-    tvFig.style.opacity = '0'; // hide emoji
+    tvFig.style.opacity = '0';
 
-    // Remove old video if exists
     if (tvVideo) { tvVideo.remove(); tvVideo = null; }
 
-    // Create and inject video element
-    tvVideo = createVideoElement(clip.src);
-    tvScreen.insertBefore(tvVideo, tvScreen.firstChild);
+    const v = document.createElement('video');
+    v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;filter:grayscale(0.6) contrast(1.1) brightness(0.75);opacity:0;transition:opacity .3s;';
+    v.muted = true;
+    v.preload = 'auto';
+    v.playsInline = true;
+    v.src = clip.src;
+    tvScreen.insertBefore(v, tvScreen.firstChild);
+    tvVideo = v;
 
-    tvVideo.play().then(() => {
-      // Fade in
-      tvVideo.style.opacity = '1';
-
-      // Stop and fade out after 5 seconds
+    v.play().then(() => {
+      v.style.opacity = '1';
       setTimeout(() => {
-        tvVideo.style.opacity = '0';
+        v.style.opacity = '0';
         setTimeout(() => {
           tvWrap.classList.remove('showing');
           if (tvVideo) { tvVideo.pause(); tvVideo.remove(); tvVideo = null; }
         }, 400);
       }, 5000);
-
     }).catch(() => {
-      // If video fails to load (network etc.) fall back to emoji
       tvWrap.classList.remove('showing');
-      const fallbackEmoji = ['👁️','🧛','💀','👻','🧟','🧙'];
-      tvFig.textContent = fallbackEmoji[Math.floor(Math.random()*fallbackEmoji.length)];
+      const fallback = ['👁️','🧛','💀','👻','🧟','🧙'];
+      tvFig.textContent = fallback[Math.floor(Math.random() * fallback.length)];
       tvFig.style.opacity = '1';
       tvWrap.classList.add('showing');
       setTimeout(() => {
@@ -1659,68 +1080,15 @@ function triggerTV() {
         setTimeout(() => { tvWrap.classList.remove('showing'); }, 400);
       }, 3000);
     });
-
   }, 700);
 }
 
-// Fire every ~15 seconds with slight randomness
 function scheduleTVEvent() {
   triggerTV();
   setTimeout(scheduleTVEvent, 13000 + Math.random() * 6000);
 }
 setTimeout(scheduleTVEvent, 5000 + Math.random() * 5000);
+
 </script>
 </body>
 </html>
-<script>
-// =============================================
-// Helloween Radio Player
-// =============================================
-
-let audio = null;      // Audio object
-let isPlaying = false;
-
-function togglePlay() {
-    // Create audio only once
-    if (!audio) {
-        audio = new Audio("https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween");
-        audio.preload = "none";
-
-        audio.onerror = () => {
-            console.error("Stream failed to load");
-            alert("Cannot connect to the radio stream right now.\nPlease check the stream URL.");
-        };
-
-        // Optional: update button when stream ends
-        audio.onended = () => {
-            isPlaying = false;
-            document.getElementById("play-btn-top").innerHTML = "▶";
-        };
-    }
-
-    const btn = document.getElementById("play-btn-top");
-
-    if (isPlaying) {
-        // Pause
-        audio.pause();
-        btn.innerHTML = "▶";
-    } else {
-        // Play
-        audio.play().catch(err => {
-            console.error("Play failed:", err);
-            alert("Playback failed. The stream may be offline.");
-        });
-        btn.innerHTML = "❚❚";
-    }
-
-    isPlaying = !isPlaying;
-}
-
-// Attach click listener safely
-document.addEventListener("DOMContentLoaded", () => {
-    const playBtn = document.getElementById("play-btn-top");
-    if (playBtn) {
-        playBtn.addEventListener("click", togglePlay);
-    }
-});
-</script>
