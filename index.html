@@ -1209,9 +1209,9 @@
 
         <div class="stone-rule"></div>
 
-        <!-- Play widget — sits just below skull -->
+                <!-- Play widget — sits just below skull -->
         <div class="stone-top-player">
-          <button class="stone-top-btn" id="play-btn-top" onclick="togglePlay()" title="Play / Pause">▶</button>
+          <button class="stone-top-btn" id="play-btn-top" title="Play / Pause">▶</button>
           <div class="stone-top-sig">
             <span class="stone-top-live" id="top-live-dot">●</span>
             <span id="top-sig-lbl" style="font-family:var(--font-mono);font-size:.55rem;letter-spacing:.1em;color:var(--stone-sub);">TUNE IN</span>
@@ -1673,3 +1673,49 @@ setTimeout(scheduleTVEvent, 5000 + Math.random() * 5000);
 </script>
 </body>
 </html>
+<script>
+// =============================================
+// Simple Audio Player for Helloween Radio
+// =============================================
+
+let audio = null;           // Will hold the Audio object
+let isPlaying = false;
+
+function togglePlay() {
+    // Create the audio element only once
+    if (!audio) {
+        audio = new Audio("https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween");   // ←←← CHANGE THIS LINE
+        audio.preload = "none";
+
+        // Optional: show error if stream fails
+        audio.onerror = () => {
+            console.error("Stream failed to load");
+            alert("Cannot connect to the radio stream right now. Please check the URL.");
+        };
+    }
+
+    const btn = document.getElementById("play-btn-top");
+
+    if (isPlaying) {
+        // Pause
+        audio.pause();
+        btn.innerHTML = "▶";
+    } else {
+        // Play
+        audio.play().catch(err => {
+            console.error("Playback failed:", err);
+        });
+        btn.innerHTML = "❚❚";   // Pause symbol
+    }
+
+    isPlaying = !isPlaying;
+}
+
+// Safely attach the click listener after the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    const playBtn = document.getElementById("play-btn-top");
+    if (playBtn) {
+        playBtn.addEventListener("click", togglePlay);
+    }
+});
+</script>
