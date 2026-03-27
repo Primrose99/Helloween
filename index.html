@@ -1675,22 +1675,27 @@ setTimeout(scheduleTVEvent, 5000 + Math.random() * 5000);
 </html>
 <script>
 // =============================================
-// Simple Audio Player for Helloween Radio
+// Helloween Radio Player
 // =============================================
 
-let audio = null;           // Will hold the Audio object
+let audio = null;      // Audio object
 let isPlaying = false;
 
 function togglePlay() {
-    // Create the audio element only once
+    // Create audio only once
     if (!audio) {
-        audio = new Audio("https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween");   // ←←← CHANGE THIS LINE
+        audio = new Audio("https://automobile-optimize-hiring-occupied.trycloudflare.com/helloween");
         audio.preload = "none";
 
-        // Optional: show error if stream fails
         audio.onerror = () => {
             console.error("Stream failed to load");
-            alert("Cannot connect to the radio stream right now. Please check the URL.");
+            alert("Cannot connect to the radio stream right now.\nPlease check the stream URL.");
+        };
+
+        // Optional: update button when stream ends
+        audio.onended = () => {
+            isPlaying = false;
+            document.getElementById("play-btn-top").innerHTML = "▶";
         };
     }
 
@@ -1703,15 +1708,16 @@ function togglePlay() {
     } else {
         // Play
         audio.play().catch(err => {
-            console.error("Playback failed:", err);
+            console.error("Play failed:", err);
+            alert("Playback failed. The stream may be offline.");
         });
-        btn.innerHTML = "❚❚";   // Pause symbol
+        btn.innerHTML = "❚❚";
     }
 
     isPlaying = !isPlaying;
 }
 
-// Safely attach the click listener after the page loads
+// Attach click listener safely
 document.addEventListener("DOMContentLoaded", () => {
     const playBtn = document.getElementById("play-btn-top");
     if (playBtn) {
