@@ -467,7 +467,11 @@
 
     .tv-wrap {
       position: fixed; bottom: 0; right: 2%;
-      width: clamp(120px, 16vw, 200px); z-index: 15; pointer-events: none;
+      width: clamp(240px, 32vw, 400px); z-index: 15;
+      pointer-events: auto; cursor: pointer;
+    }
+    .tv-wrap:hover .tv-electric {
+      animation: elec-flash .15s ease-in-out 2 !important;
     }
     .tv-body {
       position: relative; width: 100%; padding-bottom: 90%;
@@ -555,7 +559,7 @@
     @keyframes screen-on { 0%{ background:#050505; } 20%{ background:#181818; } 30%{ background:#0e1a0e; } 75%{ background:#0a140a; } 100%{ background:#050505; } }
 
     @media(max-width:480px){
-      .tv-wrap { width: 90px; right: 1%; }
+      .tv-wrap { width: 180px; right: 1%; }
     }
   </style>
 </head>
@@ -1014,23 +1018,39 @@ poll();
 setInterval(poll, REFRESH_MS);
 
 /* ── SPOOKY TV — public domain horror film clips ── */
+/* Only confirmed-live archive.org items with H.264 _512kb.mp4 derivatives */
 const TV_CLIPS = [
-  { src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=78,83" },
-  { src: "https://archive.org/download/NightOfTheLivingDeadHD/Night%20of%20the%20Living%20Dead%20HD.mp4#t=1820,1825" },
-  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=2460,2465" },
-  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_%281922%29.mp4#t=4200,4205" },
-  { src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari.mp4#t=2700,2705" },
-  { src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=480,485" },
-  { src: "https://archive.org/download/white-zombie-1932/white-zombie-1932.mp4#t=1200,1205" },
-  { src: "https://archive.org/download/ThePhantomOfTheOpera1925/The%20Phantom%20of%20the%20Opera%20%281925%29.mp4#t=4140,4145" },
-  { src: "https://archive.org/download/TheGolem1920/The%20Golem%20%281920%29.mp4#t=1560,1565" },
-  { src: "https://archive.org/download/SpooksRunWild/SpooksRunWild.mp4#t=600,605" },
-  { src: "https://archive.org/download/TheTerror/TheTerror.mp4#t=720,725" },
-  { src: "https://archive.org/download/Dementia13/Dementia13.mp4#t=1080,1085" },
-  { src: "https://archive.org/download/TheLittleShopOfHorrors_201/The%20Little%20Shop%20of%20Horrors.mp4#t=2400,2405" },
-  { src: "https://archive.org/download/CarnivalOfSouls/CarnivalOfSouls.mp4#t=3120,3125" },
-  { src: "https://archive.org/download/PlanNineFromOuterSpace/PlanNineFromOuterSpace.mp4#t=1440,1445" }
+  /* Nosferatu (1922) */
+  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_1922_Symphony_of_Horror_512kb.mp4", start: 65  },
+  { src: "https://archive.org/download/Nosferatu_most_complete_version_93_mins./Nosferatu_1922_Symphony_of_Horror_512kb.mp4", start: 110 },
+  /* The Cabinet of Dr. Caligari (1920) */
+  { src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/The_Cabinet_of_Dr._Caligari_512kb.mp4", start: 75  },
+  { src: "https://archive.org/download/DasKabinettdesDoktorCaligariTheCabinetofDrCaligari/The_Cabinet_of_Dr._Caligari_512kb.mp4", start: 105 },
+  /* The Terror (1963) */
+  { src: "https://archive.org/download/TheTerror/TheTerror_512kb.mp4", start: 60  },
+  { src: "https://archive.org/download/TheTerror/TheTerror_512kb.mp4", start: 95  },
+  /* Carnival of Souls (1962) */
+  { src: "https://archive.org/download/carnival_of_souls/carnival_of_souls_512kb.mp4", start: 65  },
+  { src: "https://archive.org/download/carnival_of_souls/carnival_of_souls_512kb.mp4", start: 100 },
+  /* Spooks Run Wild (1941) */
+  { src: "https://archive.org/download/spooks_run_wild/spooks_run_wild_512kb.mp4", start: 80  },
+  { src: "https://archive.org/download/spooks_run_wild/spooks_run_wild_512kb.mp4", start: 115 },
+  /* House on Haunted Hill (1959) */
+  { src: "https://archive.org/download/HouseOnHauntedHill1959/House-On-Haunted-Hill_512kb.mp4", start: 70  },
+  { src: "https://archive.org/download/HouseOnHauntedHill1959/House-On-Haunted-Hill_512kb.mp4", start: 105 },
+  /* Plan 9 from Outer Space (1957) */
+  { src: "https://archive.org/download/plan-9-from-outer-space/plan-9-from-outer-space.mp4", start: 55  },
+  { src: "https://archive.org/download/plan-9-from-outer-space/plan-9-from-outer-space.mp4", start: 90  },
 ];
+
+/* Fisher-Yates shuffle so clips never repeat in the same order */
+function shuffleClips(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+shuffleClips(TV_CLIPS);
 
 const tvWrap   = document.getElementById('spooky-tv');
 const tvFig    = document.getElementById('tv-figure');
@@ -1038,57 +1058,123 @@ const tvScreen = document.getElementById('tv-screen');
 let clipIndex  = 0;
 let tvVideo    = null;
 
-function triggerTV() {
-  const clip = TV_CLIPS[clipIndex % TV_CLIPS.length];
-  clipIndex++;
+const TV_CLIP_DURATION = 7000;   /* ms to show each clip once playing */
+const TV_LOAD_TIMEOUT  = 12000;  /* ms to wait for video before falling back */
 
+function tvFallback() {
+  tvWrap.classList.remove('showing');
+  const fallback = ['👁️','🧛','💀','👻','🧟','🧙'];
+  tvFig.textContent = fallback[Math.floor(Math.random() * fallback.length)];
+  tvFig.style.display = 'flex'; /* restore so figure-show animation can run */
+  tvFig.style.opacity = '';
+  tvWrap.classList.add('showing');
+  setTimeout(() => {
+    tvFig.style.opacity = '0';
+    setTimeout(() => {
+      tvWrap.classList.remove('showing');
+      tvFig.style.display = 'none';
+    }, 400);
+  }, 3000);
+}
+
+function tvHide() {
+  if (tvVideo) {
+    tvVideo.style.opacity = '0';
+    setTimeout(() => {
+      tvWrap.classList.remove('showing');
+      if (tvVideo) { tvVideo.pause(); tvVideo.remove(); tvVideo = null; }
+    }, 400);
+  } else {
+    tvWrap.classList.remove('showing');
+  }
+}
+
+function triggerTV() {
+  if (clipIndex >= TV_CLIPS.length) { clipIndex = 0; shuffleClips(TV_CLIPS); }
+  const clip = TV_CLIPS[clipIndex++];
+
+  /* Phase 1 — electrical crackle + static flash */
   tvWrap.classList.add('crackling');
 
   setTimeout(() => {
     tvWrap.classList.remove('crackling');
     tvWrap.classList.add('showing');
-    tvFig.style.opacity = '0';
+    tvFig.style.display = 'none'; /* hide fully — CSS animation overrides opacity */
 
-    if (tvVideo) { tvVideo.remove(); tvVideo = null; }
+    if (tvVideo) { tvVideo.pause(); tvVideo.remove(); tvVideo = null; }
 
     const v = document.createElement('video');
-    v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;filter:grayscale(0.6) contrast(1.1) brightness(0.75);opacity:0;transition:opacity .3s;';
-    v.muted = true;
-    v.preload = 'auto';
+    v.style.cssText = [
+      'position:absolute;inset:0;width:100%;height:100%',
+      'object-fit:cover;border-radius:5px',
+      'filter:grayscale(0.7) contrast(1.15) brightness(0.7) sepia(0.2)',
+      'opacity:0;transition:opacity .4s'
+    ].join(';');
+    v.muted       = true;
     v.playsInline = true;
-    v.src = clip.src;
+    /* NOTE: no crossOrigin attr — we're only playing, not reading pixels,
+       and crossOrigin="anonymous" causes archive.org to CORS-block the stream */
     tvScreen.insertBefore(v, tvScreen.firstChild);
     tvVideo = v;
 
-    v.play().then(() => {
-      v.style.opacity = '1';
-      setTimeout(() => {
-        v.style.opacity = '0';
-        setTimeout(() => {
-          tvWrap.classList.remove('showing');
-          if (tvVideo) { tvVideo.pause(); tvVideo.remove(); tvVideo = null; }
-        }, 400);
-      }, 5000);
-    }).catch(() => {
-      tvWrap.classList.remove('showing');
-      const fallback = ['👁️','🧛','💀','👻','🧟','🧙'];
-      tvFig.textContent = fallback[Math.floor(Math.random() * fallback.length)];
-      tvFig.style.opacity = '1';
-      tvWrap.classList.add('showing');
-      setTimeout(() => {
-        tvFig.style.opacity = '0';
-        setTimeout(() => { tvWrap.classList.remove('showing'); }, 400);
-      }, 3000);
+    /* Timeout safety net — if video never loads, show emoji instead */
+    let loaded = false;
+    const bail = setTimeout(() => {
+      if (!loaded) {
+        console.warn('[TV] timed out waiting for', clip.src, '— falling back to emoji');
+        v.remove(); tvVideo = null; tvFallback();
+      }
+    }, TV_LOAD_TIMEOUT);
+
+    /* Log every meaningful video event so we can diagnose in console */
+    v.addEventListener('loadedmetadata', () => {
+      console.log('[TV] loadedmetadata — seeking to', clip.start, 's');
+      v.currentTime = clip.start;
+    }, { once: true });
+
+    v.addEventListener('seeked', () => {
+      if (loaded) return;
+      console.log('[TV] seeked — attempting play()');
+      loaded = true;
+      clearTimeout(bail);
+      v.play().then(() => {
+        console.log('[TV] playing:', clip.src, 'from', clip.start, 's');
+        v.style.opacity = '1';
+        setTimeout(tvHide, TV_CLIP_DURATION);
+      }).catch((err) => {
+        console.error('[TV] play() rejected:', err);
+        v.remove(); tvVideo = null; tvFallback();
+      });
+    }, { once: true });
+
+    v.addEventListener('error', (e) => {
+      console.error('[TV] video error:', v.error?.code, v.error?.message, clip.src);
+      if (!loaded) { clearTimeout(bail); v.remove(); tvVideo = null; tvFallback(); }
     });
-  }, 700);
+
+    /* Start loading — src set AFTER all event listeners are attached */
+    v.src = clip.src;
+    v.load();
+    console.log('[TV] loading clip:', clip.src, 'start:', clip.start);
+
+  }, 800);
 }
 
 function scheduleTVEvent() {
   triggerTV();
-  setTimeout(scheduleTVEvent, 13000 + Math.random() * 6000);
+  setTimeout(scheduleTVEvent, 15000 + Math.random() * 8000);
 }
-setTimeout(scheduleTVEvent, 5000 + Math.random() * 5000);
+setTimeout(scheduleTVEvent, 6000 + Math.random() * 4000);
+
+/* Click TV to manually trigger a clip (handy for testing) */
+let tvBusy = false;
+tvWrap.addEventListener('click', () => {
+  if (tvBusy) return;
+  tvBusy = true;
+  triggerTV();
+  setTimeout(() => { tvBusy = false; }, 12000);
+});
 
 </script>
-</body>
+<script src="https://replit-cdn.com/replit-pill/replit-pill.global.js" data-repl-id="bf59cf18-6335-43ea-b7d4-6d59c45d8dc5"></script></body>
 </html>
